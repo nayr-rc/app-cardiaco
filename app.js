@@ -1,11 +1,9 @@
 async function initDashboard() {
     let data;
     try {
-        // Try fetching first (works with local servers)
         const response = await fetch(`dashboard_data.json?v=${new Date().getTime()}`);
         data = await response.json();
     } catch (e) {
-        // Fallback to the JS variable (works with file:// protocol)
         console.warn("Fetch failed, using local DASHBOARD_DATA fallback.");
         data = typeof DASHBOARD_DATA !== 'undefined' ? DASHBOARD_DATA : null;
     }
@@ -16,13 +14,6 @@ async function initDashboard() {
     }
 
     try {
-        // 0. Update Profile
-        if (data.user) {
-            document.getElementById('user-name').innerText = data.user.name;
-            document.getElementById('user-dob').innerText = `Nasc: ${data.user.dob}`;
-            document.getElementById('profile-photo').innerText = data.user.photo_placeholder || "U";
-        }
-
         // 1. Update Gauge
         const riskVal = document.getElementById('risk-value');
         const riskStatus = document.getElementById('risk-status');
@@ -31,28 +22,24 @@ async function initDashboard() {
         riskVal.innerText = `${data.latest_score}%`;
         riskStatus.innerText = data.status;
 
-        // Set Color and Progress
-        let color = '#2ecc71'; // Green
-        if (data.latest_score > 60) color = '#e74c3c'; // Red
-        else if (data.latest_score > 40) color = '#e67e22'; // Orange
-        else if (data.latest_score > 20) color = '#f1c40f'; // Yellow
+        let color = '#2ecc71';
+        if (data.latest_score > 60) color = '#e74c3c';
+        else if (data.latest_score > 40) color = '#e67e22';
+        else if (data.latest_score > 20) color = '#f1c40f';
 
         riskStatus.style.color = color;
         progressCircle.style.stroke = color;
 
-        // svg circumference is 2 * PI * 45 = 282.7
         const offset = 283 - (data.latest_score / 100) * 283;
         progressCircle.style.strokeDashoffset = offset;
 
         // 2. Update Metadata
-        document.getElementById('data-range').innerText = `Based on ${data.data_points_count} days of data`;
-        document.getElementById('last-update').innerText = `Last updated: ${data.last_updated}`;
+        document.getElementById('data-range').innerText = `${data.data_points_count} days`;
+        document.getElementById('last-update').innerText = data.last_updated;
 
         // 3. Render Trend Chart
         const chart = document.getElementById('trend-chart');
         chart.innerHTML = '';
-
-        // Reverse trend to be chronological (T-6 to T-0)
         const trend = [...data.trend].reverse();
 
         trend.forEach(point => {
@@ -62,13 +49,10 @@ async function initDashboard() {
             const bar = document.createElement('div');
             bar.className = 'bar';
 
-            // Set bar color
-            let barColor = '#2ecc71';
-            if (point.score > 60) barColor = '#e74c3c';
-            else if (point.score > 40) barColor = '#e67e22';
-            else if (point.score > 20) barColor = '#f1c40f';
+            let barAlpha = 0.3;
+            if (point.score > 60) barAlpha = 0.8;
 
-            bar.style.background = barColor;
+            bar.style.background = `rgba(255, 255, 255, ${barAlpha})`;
 
             const valLabel = document.createElement('span');
             valLabel.className = 'bar-val';
@@ -78,12 +62,10 @@ async function initDashboard() {
             wrapper.appendChild(valLabel);
             chart.appendChild(wrapper);
 
-            // Animate height
-            const finalHeight = Math.max(8, point.score);
+            const finalHeight = Math.max(15, point.score);
             requestAnimationFrame(() => {
                 bar.style.height = `${finalHeight}%`;
             });
-            console.log(`Setting bar height to ${finalHeight}% for ${point.day}`);
         });
 
         // 4. Update Badge
@@ -91,11 +73,13 @@ async function initDashboard() {
         const first = trend[0].score;
         const last = trend[trend.length - 1].score;
         if (last > first) {
-            badge.innerText = '↗ Rising';
-            badge.style.background = 'rgba(231, 76, 60, 0.1)';
-            badge.style.color = '#e74c3c';
+            badge.innerText = '↗ Rising Risk';
+            badge.style.background = '#FF5252';
+            badge.style.color = '#ffffff';
         } else {
-            badge.innerText = '↘ Falling';
+            badge.innerText = '↘ Improving';
+            badge.style.background = 'rgba(255, 255, 255, 0.2)';
+            badge.style.color = '#ffffff';
         }
 
     } catch (e) {

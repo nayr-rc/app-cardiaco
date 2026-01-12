@@ -12,42 +12,142 @@
 </head>
 
 <body>
-    <div class="dashboard-container">
-        <header>
-            <div class="brand">CardioRisk AI <span class="badge-live">Live</span></div>
-            <div class="status-indicator">System Active</div>
-        </header>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active"><span class="icon">🏠</span></a>
+                <a href="#" class="nav-item"><span class="icon">📄</span></a>
+                <a href="#" class="nav-item"><span class="icon">📊</span></a>
+                <a href="#" class="nav-item"><span class="icon">📱</span></a>
+                <a href="#" class="nav-item"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
 
-        <main class="grid">
-            <!-- Risk Gauge Card -->
-            <div class="card risk-card">
-                <div class="gauge-container">
-                    <svg viewBox="0 0 100 100" class="gauge">
-                        <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
-                        <circle class="gauge-progress" cx="50" cy="50" r="45"></circle>
-                    </svg>
-                    <div class="gauge-text">
-                        <span id="risk-value">--%</span>
-                        <span class="label">risk</span>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Primary</span>
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search">
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User"
+                            class="avatar-img">
                     </div>
                 </div>
-                <h2 id="risk-status">Analyzing...</h2>
-                <div class="summary-text" id="data-range">
-                    Based on -- days of data
-                </div>
-                <div class="update-text" id="last-update">
-                    Last updated: --
-                </div>
-            </div>
+            </header>
 
-            <!-- Trend Chart Card -->
-            <div class="card trend-card">
-                <div class="card-header">
-                    <h3>Risk Trend (15 Days)</h3>
-                    <div id="trend-badge" class="badge">--</div>
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Left Column: Overview & Recommendations -->
+                <div class="grid-column col-main">
+                    <section class="card overview-card">
+                        <div class="card-header">
+                            <h2>Overview</h2>
+                            <div class="badge" id="trend-badge">--</div>
+                        </div>
+                        <div class="chart-container" id="trend-chart">
+                            <!-- Bars injected via JS -->
+                        </div>
+                        <div class="card-footer-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Time</span>
+                                <span class="stat-value" id="data-range">-- days</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Last Analysis</span>
+                                <span class="stat-value" id="last-update">--</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="recommendations-row">
+                        <div class="card mini-card">
+                            <div class="icon-box purple"><span class="icon">🚲</span></div>
+                            <h3>Bicycle Drill</h3>
+                            <p>36 km / weeks</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 45%;"></div>
+                            </div>
+                        </div>
+                        <div class="card mini-card">
+                            <div class="icon-box blue"><span class="icon">🏃</span></div>
+                            <h3>Jogging Hero</h3>
+                            <p>12 km / month</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 13%;"></div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-                <div class="chart-container" id="trend-chart">
-                    <!-- Bars injected via JS -->
+
+                <!-- Center Column: Status & Activity -->
+                <div class="grid-column col-status">
+                    <section class="card risk-gauge-card">
+                        <div class="gauge-container">
+                            <svg viewBox="0 0 100 100" class="gauge">
+                                <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="gauge-progress" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="gauge-text">
+                                <span id="risk-value">--%</span>
+                                <span class="label">risk</span>
+                            </div>
+                        </div>
+                        <h2 id="risk-status">Analyzing...</h2>
+                    </section>
+
+                    <section class="card activity-card pink">
+                        <div class="icon-box"><span class="icon">🏃</span></div>
+                        <div class="activity-info">
+                            <h3>My Jogging</h3>
+                            <p>Daily goals</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column: Community & Map -->
+                <div class="grid-column col-side">
+                    <section class="card community-card">
+                        <div class="card-header">
+                            <h3>Friends</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="friends-list">
+                            <div class="friend-item">
+                                <img src="https://ui-avatars.com/api/?name=MS&background=0D8ABC&color=fff" alt="Friend"
+                                    class="mini-avatar">
+                                <div class="friend-info">
+                                    <span class="name">Max Stone</span>
+                                    <span class="status">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card map-card">
+                        <div class="card-header">
+                            <h3>Live Map</h3>
+                        </div>
+                        <div class="map-placeholder">
+                            <div class="map-overlay">
+                                <span>GPS Active</span>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </main>

@@ -56,13 +56,11 @@ async function initDashboard() {
             const bar = document.createElement('div');
             bar.className = 'bar';
 
-            // Set bar color
-            let barColor = '#2ecc71';
-            if (point.score > 60) barColor = '#e74c3c';
-            else if (point.score > 40) barColor = '#e67e22';
-            else if (point.score > 20) barColor = '#f1c40f';
+            // Set bar color - using semi-transparent white for better visibility on purple
+            let barAlpha = 0.3;
+            if (point.score > 60) barAlpha = 0.8; // Highlight high risk
 
-            bar.style.background = barColor;
+            bar.style.background = `rgba(255, 255, 255, ${barAlpha})`;
 
             const valLabel = document.createElement('span');
             valLabel.className = 'bar-val';
@@ -73,11 +71,10 @@ async function initDashboard() {
             chart.appendChild(wrapper);
 
             // Animate height
-            const finalHeight = Math.max(8, point.score);
+            const finalHeight = Math.max(15, point.score); // Slightly higher min height for visibility
             requestAnimationFrame(() => {
                 bar.style.height = `${finalHeight}%`;
             });
-            console.log(`Setting bar height to ${finalHeight}% for ${point.day}`);
         });
 
         // 4. Update Badge
@@ -85,11 +82,13 @@ async function initDashboard() {
         const first = trend[0].score;
         const last = trend[trend.length - 1].score;
         if (last > first) {
-            badge.innerText = '↗ Rising';
-            badge.style.background = 'rgba(231, 76, 60, 0.1)';
-            badge.style.color = '#e74c3c';
+            badge.innerText = '↗ Rising Risk';
+            badge.style.background = '#FF5252';
+            badge.style.color = '#ffffff';
         } else {
-            badge.innerText = '↘ Falling';
+            badge.innerText = '↘ Improving';
+            badge.style.background = 'rgba(255, 255, 255, 0.2)';
+            badge.style.color = '#ffffff';
         }
 
     } catch (e) {
