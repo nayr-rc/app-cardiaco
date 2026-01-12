@@ -1,0 +1,36 @@
+{
+    "latest_score": 60.4,
+    "status": "HIGH RISK (Consult Doctor)",
+    "last_updated": "Jan 12, 2026 at 07:03 PM",
+    "data_points_count": 60,
+    "trend": [
+        {
+            "day": "T-0",
+            "score": 60.4
+        },
+        {
+            "day": "T-1",
+            "score": 60.4
+        },
+        {
+            "day": "T-2",
+            "score": 60.4
+        },
+        {
+            "day": "T-3",
+            "score": 60.4
+        },
+        {
+            "day": "T-4",
+            "score": 60.4
+        },
+        {
+            "day": "T-5",
+            "score": 51.8
+        },
+        {
+            "day": "T-6",
+            "score": 53.4
+        }
+    ]
+}

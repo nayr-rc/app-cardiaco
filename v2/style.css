@@ -36,50 +36,30 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 30px;
 }
 
 .user-profile {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #333, #555);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #333, #555);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    font-size: 0.8rem;
 }
 
-.user-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.user-name {
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--text-primary);
-}
-
-.user-dob {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-.brand-container {
-    text-align: right;
+.user-handle {
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .brand {
@@ -241,12 +221,11 @@ header {
     align-items: flex-end;
     justify-content: space-around;
     height: 180px;
-    gap: 6px;
-    padding: 10px;
-    background: #111 !important;
-    /* Force visibility */
+    gap: 12px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 16px;
-    border: 1px solid #333;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .bar-wrapper {
@@ -260,15 +239,12 @@ header {
 }
 
 .bar {
-    width: 18px !important;
+    width: 28px;
     background: #444;
-    /* Default dark grey */
     border-radius: 6px;
-    min-height: 8px;
-    /* Force minimum visibility */
-    transition: background 0.5s ease, height 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 5px;
+    transition: height 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.5s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .bar:hover {

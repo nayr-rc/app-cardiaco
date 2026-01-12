@@ -11,21 +11,35 @@ def main():
     # Path settings
     raw_data_path = "data/raw/export.xml"
     synthetic_data_path = "data/processed/synthetic_data.csv"
+    dashboard_js_path = "data.js"
+    dashboard_v3_js_path = "v3/data.js"
+    dashboard_output_path = "v3/dashboard_data.json"
     
     # 1. Data Selection & Loading
+    df = pd.DataFrame()
+    
     if os.path.exists(raw_data_path):
-        print(f"Found real HealthKit data at {raw_data_path}")
+        print(f"Checking for HealthKit data at {raw_data_path}...")
         processor = HealthDataProcessor(raw_data_path)
-        df = processor.parse_apple_health()
-    else:
-        print("Real HealthKit data not found. Using synthetic data.")
-        df = pd.DataFrame()
+        df_xml = processor.parse_apple_health()
+        if not df_xml.empty and len(df_xml) >= 5:
+            print("Successfully loaded real data.")
+            df = df_xml
+        else:
+            print("HealthKit XML found but data is empty or too sparse.")
+            
+    if df.empty:
+        if os.path.exists(synthetic_data_path):
+            print(f"LOADING data from CSV: {synthetic_data_path}")
+            df = pd.read_csv(synthetic_data_path)
+        else:
+            print("No CSV found. Generating fresh synthetic demonstration.")
+            df = generate_synthetic_data(days=60, anomaly_start_day=50)
 
     features = ['HRV', 'RHR', 'RespiratoryRate', 'SleepDuration', 'SpO2']
     
     if df.empty or len(df) < 5:
-        print("Real data missing or too sparse. FORCING 60-day synthetic crisis for interesting demonstration.")
-        # Use 60 days where's there's a clear decline in the last 10 days
+        print("Final data check: Still too sparse. Forcing emergency synthetic generation.")
         df = generate_synthetic_data(days=60, anomaly_start_day=50)
     
     X = df[features].values
@@ -65,6 +79,11 @@ def main():
     import json
     
     dashboard_data = {
+        "user": {
+            "name": "Usuário CardioRisk",
+            "dob": "15/05/1985",
+            "photo_placeholder": "U"
+        },
         "latest_score": round(float(risk_score), 1),
         "status": status,
         "last_updated": datetime.now().strftime("%b %d, %Y at %I:%M %p"),
@@ -72,7 +91,7 @@ def main():
         "trend": []
     }
     
-    for i in range(7):
+    for i in range(15):
         idx = len(X) - 1 - i
         if idx >= 0:
             score = float(detector.predict_risk_score(X[idx:idx+1]))
@@ -81,9 +100,18 @@ def main():
                 "score": round(score, 1)
             })
 
-    with open("dashboard_data.json", "w") as f:
-        json.dump(dashboard_data, f, indent=4)
-    print("\nDashboard data exported to dashboard_data.json")
+    # Export to multiple formats and locations for maximum compatibility
+    for path in ["dashboard_data.json", "v3/dashboard_data.json"]:
+        with open(path, "w") as f:
+            json.dump(dashboard_data, f, indent=4)
+            
+    # Export as JS variable to bypass CORS/File protocol restrictions
+    js_content = f"const DASHBOARD_DATA = {json.dumps(dashboard_data, indent=4)};"
+    for path in ["data.js", "v3/data.js"]:
+        with open(path, "w") as f:
+            f.write(js_content)
+            
+    print("\n[SUCCESS] Dashboard updates exported (JSON & JS).")
 
 if __name__ == "__main__":
     main()

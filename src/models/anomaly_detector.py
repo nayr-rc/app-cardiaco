@@ -16,21 +16,27 @@ class CardiacAnomalyDetector:
         if not self.is_trained:
             return 50 
         
-        # Decision function: 
-        #   Higher = more normal (around 0.2 to 0.5)
-        #   Lower = more anomalous (negative values)
         raw_score = self.model.decision_function(current_data)[0]
         
         # Mapping logic:
-        # We want "Normal" (raw > 0.1) to be 0-20
-        # We want "Anomalous" (raw < 0) to scale up to 100
-        # Heuristic mapping:
-        if raw_score > 0.1:
-            risk_score = 10 + (0.2 - raw_score) * 50 # Low risk range
+        # Decision function: 
+        #   Higher = more normal (around 0.2 to 0.5)
+        #   Lower = more anomalous (negative values)
+        
+        # We want a smoother transition. 
+        # Values > 0.1 should be in the 0-20 range.
+        # Values < 0 should scale into the 40-100 range.
+        
+        # Using a simple piecewise linear mapping with more sensitivity:
+        if raw_score >= 0.15:
+            # Optimal health
+            risk_score = (0.5 - raw_score) * 20 # 0.15 -> 7, 0.5 -> 0
+        elif raw_score >= 0:
+            # Normal but moving towards anomaly
+            risk_score = 10 + (0.15 - raw_score) * 150 # 0.15 -> 10, 0 -> 32.5
         else:
-            # Scale negative scores more aggressively
-            # raw_score typically goes down to -0.5 for very rare points
-            risk_score = 40 + abs(raw_score) * 150
+            # Anomalous
+            risk_score = 35 + abs(raw_score) * 250 # 0 -> 35, -0.2 -> 85
             
         return np.clip(risk_score, 0, 100)
 

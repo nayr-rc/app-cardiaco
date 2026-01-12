@@ -1,27 +1,9 @@
 async function initDashboard() {
-    let data;
     try {
-        // Try fetching first (works with local servers)
+        // Add cache-busting timestamp
         const response = await fetch(`dashboard_data.json?v=${new Date().getTime()}`);
-        data = await response.json();
-    } catch (e) {
-        // Fallback to the JS variable (works with file:// protocol)
-        console.warn("Fetch failed, using local DASHBOARD_DATA fallback.");
-        data = typeof DASHBOARD_DATA !== 'undefined' ? DASHBOARD_DATA : null;
-    }
-
-    if (!data) {
-        console.error("No dashboard data available.");
-        return;
-    }
-
-    try {
-        // 0. Update Profile
-        if (data.user) {
-            document.getElementById('user-name').innerText = data.user.name;
-            document.getElementById('user-dob').innerText = `Nasc: ${data.user.dob}`;
-            document.getElementById('profile-photo').innerText = data.user.photo_placeholder || "U";
-        }
+        const data = await response.json();
+        console.log("Dashboard data loaded:", data);
 
         // 1. Update Gauge
         const riskVal = document.getElementById('risk-value');
@@ -79,11 +61,9 @@ async function initDashboard() {
             chart.appendChild(wrapper);
 
             // Animate height
-            const finalHeight = Math.max(8, point.score);
-            requestAnimationFrame(() => {
-                bar.style.height = `${finalHeight}%`;
-            });
-            console.log(`Setting bar height to ${finalHeight}% for ${point.day}`);
+            setTimeout(() => {
+                bar.style.height = `${point.score}%`;
+            }, 100);
         });
 
         // 4. Update Badge

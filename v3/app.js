@@ -16,12 +16,6 @@ async function initDashboard() {
     }
 
     try {
-        // 0. Update Profile
-        if (data.user) {
-            document.getElementById('user-name').innerText = data.user.name;
-            document.getElementById('user-dob').innerText = `Nasc: ${data.user.dob}`;
-            document.getElementById('profile-photo').innerText = data.user.photo_placeholder || "U";
-        }
 
         // 1. Update Gauge
         const riskVal = document.getElementById('risk-value');
