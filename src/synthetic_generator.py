@@ -29,11 +29,11 @@ def generate_synthetic_data(days=60, anomaly_start_day=50):
         for i in range(anomaly_start_day, days):
             # Gradual shift over 10 days
             severity = (i - anomaly_start_day + 1) / (days - anomaly_start_day)
-            hrv[i] -= 15 * severity # HRV ↓
-            rhr[i] += 10 * severity # RHR ↑
-            resp[i] += 3 * severity # Resp ↑
-            sleep[i] -= 1.5 * severity # Sleep ↓
-            spo2[i] -= 2 * severity # SpO2 ↓
+            hrv[i] -= 25 * severity # Severe HRV ↓ (from 50 to 25)
+            rhr[i] += 20 * severity # Severe RHR ↑ (from 65 to 85)
+            resp[i] += 5 * severity # Resp ↑
+            sleep[i] -= 2.5 * severity # Sleep ↓
+            spo2[i] -= 4 * severity # SpO2 ↓
             
     df = pd.DataFrame({
         'Date': dates,

@@ -1,0 +1,262 @@
+:root {
+    --bg-color: #000000;
+    --card-bg: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --green: #2ecc71;
+    --red: #e74c3c;
+    --yellow: #f1c40f;
+    --orange: #e67e22;
+    --accent: #2980b9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.dashboard-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #333, #555);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.user-handle {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.brand {
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge-live {
+    background: #e74c3c;
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.status-indicator {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Risk Gauge */
+.gauge-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin-bottom: 20px;
+}
+
+.gauge {
+    transform: rotate(-90deg);
+}
+
+.gauge-bg {
+    fill: none;
+    stroke: #333;
+    stroke-width: 8;
+}
+
+.gauge-progress {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset 1s ease-out, stroke 1s ease;
+}
+
+.gauge-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+}
+
+#risk-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.gauge-text .label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.risk-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    transition: color 0.5s ease;
+}
+
+.summary-text,
+.update-text {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* Trend Chart */
+.trend-card {
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.card-header h3 {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--green);
+}
+
+.chart-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 180px;
+    gap: 12px;
+    padding: 15px;
+    background: #111 !important;
+    /* Force visibility */
+    border-radius: 16px;
+    border: 1px solid #333;
+}
+
+.bar-wrapper {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.bar {
+    width: 28px !important;
+    background: #444;
+    /* Default dark grey */
+    border-radius: 6px;
+    min-height: 8px;
+    /* Force minimum visibility */
+    transition: background 0.5s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bar:hover {
+    filter: brightness(1.2);
+    transform: scaleX(1.1);
+}
+
+.bar-val {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}

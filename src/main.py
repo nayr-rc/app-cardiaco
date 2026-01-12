@@ -24,15 +24,9 @@ def main():
     features = ['HRV', 'RHR', 'RespiratoryRate', 'SleepDuration', 'SpO2']
     
     if df.empty or len(df) < 5:
-        print("Real data missing or too sparse. Falling back to synthetic for demonstration.")
-        df_synth = generate_synthetic_data(days=60, anomaly_start_day=50)
-        if df.empty:
-            df = df_synth
-        else:
-            # Augment real data at the end of a synthetic baseline
-            print("Augmenting synthetic baseline with real samples...")
-            df_baseline = generate_synthetic_data(days=30, anomaly_start_day=31)
-            df = pd.concat([df_baseline, df], ignore_index=True)
+        print("Real data missing or too sparse. FORCING 60-day synthetic crisis for interesting demonstration.")
+        # Use 60 days where's there's a clear decline in the last 10 days
+        df = generate_synthetic_data(days=60, anomaly_start_day=50)
     
     X = df[features].values
     
@@ -65,12 +59,31 @@ def main():
         status = "CRITICAL (Emergency Alert)"
         
     print(f"STATUS: {status}")
-    print("\nTrending (Last 5 Days):")
-    for i in range(5):
+    
+    # 5. Export for Dashboard
+    from datetime import datetime
+    import json
+    
+    dashboard_data = {
+        "latest_score": round(float(risk_score), 1),
+        "status": status,
+        "last_updated": datetime.now().strftime("%b %d, %Y at %I:%M %p"),
+        "data_points_count": len(X),
+        "trend": []
+    }
+    
+    for i in range(7):
         idx = len(X) - 1 - i
         if idx >= 0:
-            score = detector.predict_risk_score(X[idx:idx+1])
-            print(f" T-{i} days: {score:.1f}")
+            score = float(detector.predict_risk_score(X[idx:idx+1]))
+            dashboard_data["trend"].append({
+                "day": f"T-{i}",
+                "score": round(score, 1)
+            })
+
+    with open("dashboard_data.json", "w") as f:
+        json.dump(dashboard_data, f, indent=4)
+    print("\nDashboard data exported to dashboard_data.json")
 
 if __name__ == "__main__":
     main()
