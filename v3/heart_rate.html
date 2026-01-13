@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Heart Rate</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .pulse-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            position: relative;
+        }
+
+        .heart-icon {
+            font-size: 5rem;
+            color: var(--pink);
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.2);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.1);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        .bpm-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-top: 10px;
+        }
+
+        .bpm-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item active"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item"><span class="icon">🏃</span></a>
+                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Deep Dive</span>
+                    <h1>Heart Rate</h1>
+                </div>
+            </header>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <div class="grid-column col-main">
+                    <section class="card overview-card" style="background: white; color: var(--text-primary);">
+                        <div class="card-header">
+                            <h2 style="color: var(--text-primary);">Real-time Pulse</h2>
+                        </div>
+                        <div class="pulse-container">
+                            <div class="heart-icon">💓</div>
+                            <div class="bpm-value">72</div>
+                            <div class="bpm-label">BPM</div>
+                        </div>
+                    </section>
+                </div>
+                <div class="grid-column col-side" style="grid-column: span 2;">
+                    <section class="card community-card">
+                        <div class="card-header">
+                            <h3>Abnormalities</h3>
+                        </div>
+                        <div class="friends-list">
+                            <p style="color: var(--text-secondary);">No abnormalities detected in the last 24 hours.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="help-tab">
+        <span class="help-icon">❓</span>
+        <span class="help-text">Ajuda</span>
+    </div>
+</body>
+
+</html>

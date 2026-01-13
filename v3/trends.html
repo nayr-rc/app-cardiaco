@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Trends</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item active"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item"><span class="icon">🏃</span></a>
+                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Deep Dive</span>
+                    <h1>Risk Trends</h1>
+                </div>
+            </header>
+
+            <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+                <section class="card overview-card">
+                    <div class="card-header">
+                        <h2>15-Day Historical Analysis</h2>
+                        <div class="badge" id="trend-badge">--</div>
+                    </div>
+                    <div class="chart-container" id="trend-chart" style="height: 400px;">
+                        <!-- Bars injected via JS -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <div class="help-tab">
+        <span class="help-icon">❓</span>
+        <span class="help-text">Ajuda</span>
+    </div>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
