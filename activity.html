@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Activity</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item active"><span class="icon">🏃</span></a>
+                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Deep Dive</span>
+                    <h1>Physical Activity</h1>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="grid-column col-main" style="grid-column: span 2;">
+                    <section class="card overview-card" style="background: white; color: var(--text-primary);">
+                        <div class="card-header">
+                            <h2 style="color: var(--text-primary);">Activity Breakdown</h2>
+                        </div>
+                        <div style="display: flex; gap: 40px; padding: 20px;">
+                            <div style="flex: 1;">
+                                <h3>Bicycle Drill</h3>
+                                <p style="font-size: 2rem; font-weight: 700;">36 <span
+                                        style="font-size: 1rem; color: var(--text-secondary);">km / week</span></p>
+                                <div class="progress-bar" style="height: 12px; margin-top: 10px;">
+                                    <div class="progress" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <div style="flex: 1;">
+                                <h3>Jogging Hero</h3>
+                                <p style="font-size: 2rem; font-weight: 700;">12 <span
+                                        style="font-size: 1rem; color: var(--text-secondary);">km / month</span></p>
+                                <div class="progress-bar" style="height: 12px; margin-top: 10px;">
+                                    <div class="progress" style="width: 13%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
