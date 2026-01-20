@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Pesquisa Médica</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="medical_research.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item"><span class="icon">🏃</span></a>
+                <a href="medical_research.html" class="nav-item active"><span class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Evidências Científicas</span>
+                    <h1>Pesquisa Médica</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Buscar parâmetros">
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User"
+                            class="avatar-img">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Medical Disclaimer -->
+            <div class="medical-disclaimer">
+                <span class="disclaimer-icon">⚕️</span>
+                <div class="disclaimer-content">
+                    <strong>Aviso Médico:</strong> As informações apresentadas são baseadas em literatura científica
+                    e destinam-se apenas para fins educacionais. Este sistema NÃO substitui consulta médica
+                    profissional. Em caso de sintomas ou dúvidas, consulte sempre um cardiologista.
+                </div>
+            </div>
+
+            <!-- Research Content -->
+            <div class="research-container">
+                <!-- HRV Section -->
+                <section class="research-card">
+                    <div class="research-header">
+                        <h2>📈 Variabilidade da Frequência Cardíaca (HRV)</h2>
+                        <span class="evidence-badge">Alto Nível de Evidência</span>
+                    </div>
+                    <p class="research-intro">
+                        A HRV mede a variação temporal entre batimentos cardíacos consecutivos e é um indicador
+                        poderoso do equilíbrio autonômico e saúde cardiovascular.
+                    </p>
+
+                    <div class="parameter-grid">
+                        <div class="parameter-card risk-normal">
+                            <h3>Normal</h3>
+                            <div class="threshold">
+                                <span class="metric">SDNN</span>
+                                <span class="value">&gt; 50 ms</span>
+                            </div>
+                            <div class="threshold">
+                                <span class="metric">RMSSD</span>
+                                <span class="value">&gt; 30 ms</span>
+                            </div>
+                            <p class="description">Sistema nervoso autônomo balanceado</p>
+                        </div>
+
+                        <div class="parameter-card risk-low">
+                            <h3>Risco Baixo</h3>
+                            <div class="threshold">
+                                <span class="metric">SDNN</span>
+                                <span class="value">30-50 ms</span>
+                            </div>
+                            <div class="threshold">
+                                <span class="metric">RMSSD</span>
+                                <span class="value">20-30 ms</span>
+                            </div>
+                            <p class="description">Modulação autonômica levemente reduzida</p>
+                        </div>
+
+                        <div class="parameter-card risk-moderate">
+                            <h3>Risco Moderado</h3>
+                            <div class="threshold">
+                                <span class="metric">SDNN</span>
+                                <span class="value">20-30 ms</span>
+                            </div>
+                            <div class="threshold">
+                                <span class="metric">RMSSD</span>
+                                <span class="value">15-20 ms</span>
+                            </div>
+                            <p class="description">Disfunção autonômica significativa</p>
+                        </div>
+
+                        <div class="parameter-card risk-high">
+                            <h3>Risco Alto</h3>
+                            <div class="threshold">
+                                <span class="metric">SDNN</span>
+                                <span class="value">&lt; 20 ms</span>
+                            </div>
+                            <div class="threshold">
+                                <span class="metric">RMSSD</span>
+                                <span class="value">&lt; 15 ms</span>
+                            </div>
+                            <p class="description">Alto risco de eventos cardiovasculares</p>
+                        </div>
+                    </div>
+
+                    <div class="citations">
+                        <h4>📄 Referências Científicas:</h4>
+                        <ul>
+                            <li>Shaffer F, Ginsberg JP. An Overview of Heart Rate Variability Metrics and Norms.
+                                <em>Front Public Health</em>. 2017;5:258. (PubMed: 29034226)
+                            </li>
+                            <li>Electrophysiology TF. Heart rate variability: standards of measurement.
+                                <em>Circulation</em>.
+                                1996;93(5):1043-1065.</li>
+                            <li>Thayer JF, et al. A meta-analysis of heart rate variability and neuroimaging studies.
+                                <em>Neurosci Biobehav Rev</em>. 2012;36(2):747-756.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Resting Heart Rate Section -->
+                <section class="research-card">
+                    <div class="research-header">
+                        <h2>💓 Frequência Cardíaca de Repouso (FCR)</h2>
+                        <span class="evidence-badge">Alto Nível de Evidência</span>
+                    </div>
+                    <p class="research-intro">
+                        A frequência cardíaca de repouso é um preditor independente de mortalidade cardiovascular e
+                        eventos adversos, especialmente em pacientes com comorbidades.
+                    </p>
+
+                    <div class="threshold-table">
+                        <div class="table-row header-row">
+                            <span>Categoria</span>
+                            <span>FCR (bpm)</span>
+                            <span>Risco Cardiovascular</span>
+                        </div>
+                        <div class="table-row normal">
+                            <span>Normal</span>
+                            <span>60-100</span>
+                            <span>Baixo</span>
+                        </div>
+                        <div class="table-row low-risk">
+                            <span>Bradicardia Atlética</span>
+                            <span>50-60</span>
+                            <span>Baixo (se assintomático)</span>
+                        </div>
+                        <div class="table-row warning">
+                            <span>Bradicardia</span>
+                            <span>&lt; 50</span>
+                            <span>Requer avaliação médica</span>
+                        </div>
+                        <div class="table-row moderate">
+                            <span>Elevada</span>
+                            <span>80-100</span>
+                            <span>Moderado (com comorbidades)</span>
+                        </div>
+                        <div class="table-row high">
+                            <span>Taquicardia</span>
+                            <span>&gt; 100</span>
+                            <span>Alto - investigação necessária</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>⚠️ Importante:</strong> FCR &gt; 80 bpm está associada a aumento de 45% no risco de
+                        morte cardiovascular em pacientes com hipertensão, diabetes ou doença coronariana prévia.
+                    </div>
+
+                    <div class="citations">
+                        <h4>📄 Referências Científicas:</h4>
+                        <ul>
+                            <li>Zhang D, et al. Resting heart rate and all-cause and cardiovascular mortality.
+                                <em>Circ Res</em>. 2016;119(12):1374-1383. (PubMed: 27758828)
+                            </li>
+                            <li>Fox K, et al. Resting heart rate in cardiovascular disease. <em>J Am Coll Cardiol</em>.
+                                2007;50(9):823-830.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Blood Pressure Section -->
+                <section class="research-card">
+                    <div class="research-header">
+                        <h2>🩺 Pressão Arterial</h2>
+                        <span class="evidence-badge">Diretrizes ACC/AHA 2017</span>
+                    </div>
+
+                    <div class="bp-categories">
+                        <div class="bp-card category-normal">
+                            <h3>Normal</h3>
+                            <div class="bp-value">&lt; 120/80 mmHg</div>
+                            <p>Pressão arterial ótima</p>
+                        </div>
+                        <div class="bp-card category-elevated">
+                            <h3>Elevada</h3>
+                            <div class="bp-value">120-129 / &lt;80 mmHg</div>
+                            <p>Mudanças no estilo de vida</p>
+                        </div>
+                        <div class="bp-card category-stage1">
+                            <h3>Hipertensão Estágio 1</h3>
+                            <div class="bp-value">130-139 / 80-89 mmHg</div>
+                            <p>Considerar medicação + mudanças</p>
+                        </div>
+                        <div class="bp-card category-stage2">
+                            <h3>Hipertensão Estágio 2</h3>
+                            <div class="bp-value">≥ 140/90 mmHg</div>
+                            <p>Medicação + mudanças obrigatórias</p>
+                        </div>
+                        <div class="bp-card category-crisis">
+                            <h3>🚨 Crise Hipertensiva</h3>
+                            <div class="bp-value">&gt; 180/120 mmHg</div>
+                            <p><strong>EMERGÊNCIA MÉDICA</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="citations">
+                        <h4>📄 Referências:</h4>
+                        <ul>
+                            <li>Whelton PK, et al. 2017 ACC/AHA/AAPA/ABC/ACPM/AGS/APhA/ASH/ASPC/NMA/PCNA Guideline.
+                                <em>J Am Coll Cardiol</em>. 2018;71(19):e127-e248.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Oxygen Saturation Section -->
+                <section class="research-card">
+                    <div class="research-header">
+                        <h2>🫁 Saturação de Oxigênio (SpO2)</h2>
+                        <span class="evidence-badge">Padrão Clínico</span>
+                    </div>
+
+                    <div class="parameter-grid">
+                        <div class="parameter-card risk-normal">
+                            <h3>Normal</h3>
+                            <div class="threshold">
+                                <span class="value">≥ 95%</span>
+                            </div>
+                            <p>Oxigenação adequada</p>
+                        </div>
+                        <div class="parameter-card risk-low">
+                            <h3>Hipoxemia Leve</h3>
+                            <div class="threshold">
+                                <span class="value">90-94%</span>
+                            </div>
+                            <p>Monitoramento recomendado</p>
+                        </div>
+                        <div class="parameter-card risk-moderate">
+                            <h3>Hipoxemia Moderada</h3>
+                            <div class="threshold">
+                                <span class="value">85-89%</span>
+                            </div>
+                            <p>Avaliação médica necessária</p>
+                        </div>
+                        <div class="parameter-card risk-high">
+                            <h3>Hipoxemia Grave</h3>
+                            <div class="threshold">
+                                <span class="value">&lt; 85%</span>
+                            </div>
+                            <p>Emergência médica</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>🌙 Dessaturações Noturnas:</strong> Quedas repetidas de SpO2 durante o sono podem
+                        indicar apneia do sono, fator de risco significativo para hipertensão e arritmias.
+                    </div>
+                </section>
+
+                <!-- Sleep Quality Section -->
+                <section class="research-card">
+                    <div class="research-header">
+                        <h2>😴 Qualidade do Sono</h2>
+                        <span class="evidence-badge">Evidências Epidemiológicas</span>
+                    </div>
+
+                    <div class="sleep-metrics">
+                        <div class="sleep-metric">
+                            <h3>Duração Total</h3>
+                            <div class="metric-optimal">Ideal: 7-9 horas</div>
+                            <div class="metric-warning">Risco: &lt; 6 ou &gt; 9 horas</div>
+                            <p>Privação crônica aumenta risco cardiovascular em 48%</p>
+                        </div>
+                        <div class="sleep-metric">
+                            <h3>Sono REM</h3>
+                            <div class="metric-optimal">Ideal: 20-25% do total</div>
+                            <div class="metric-warning">Risco: &lt; 15%</div>
+                            <p>Essencial para recuperação cardiovascular</p>
+                        </div>
+                        <div class="sleep-metric">
+                            <h3>Sono Profundo</h3>
+                            <div class="metric-optimal">Ideal: 15-20% do total</div>
+                            <div class="metric-warning">Risco: &lt; 10%</div>
+                            <p>Crucial para regulação pressórica noturna</p>
+                        </div>
+                        <div class="sleep-metric">
+                            <h3>Despertares</h3>
+                            <div class="metric-optimal">Normal: &lt; 5 por noite</div>
+                            <div class="metric-warning">Problema: &gt; 10 por noite</div>
+                            <p>Fragmentação associada a hipertensão</p>
+                        </div>
+                    </div>
+
+                    <div class="citations">
+                        <h4>📄 Referências:</h4>
+                        <ul>
+                            <li>Cappuccio FP, et al. Sleep duration and all-cause mortality. <em>Sleep</em>.
+                                2010;33(5):585-592.</li>
+                            <li>St-Onge MP, et al. Sleep Duration and Quality. <em>Circulation</em>.
+                                2016;134(18):e367-e386.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Comorbidities Risk Section -->
+                <section class="research-card">
+                    <div class="research-header">
+                        <h2>⚕️ Fatores de Risco e Comorbidades</h2>
+                        <span class="evidence-badge">Diretrizes Multisociedades</span>
+                    </div>
+
+                    <div class="comorbidity-grid">
+                        <div class="comorbidity-card">
+                            <h3>🩸 Diabetes + Hipertensão</h3>
+                            <ul>
+                                <li>Meta PA: &lt; 130/80 mmHg (mais rigorosa)</li>
+                                <li>FCR elevada mais perigosa nesta população</li>
+                                <li>HRV frequentemente reduzida (neuropatia autonômica)</li>
+                                <li>Risco de eventos aumentado em 2-4x</li>
+                            </ul>
+                        </div>
+                        <div class="comorbidity-card">
+                            <h3>💔 Insuficiência Cardíaca</h3>
+                            <ul>
+                                <li>HRV marcadamente reduzida (SDNN &lt; 50 ms)</li>
+                                <li>Monitoramento contínuo essencial</li>
+                                <li>Ganho de peso súbito: alerta (retenção hídrica)</li>
+                                <li>FC repouso &gt; 70 bpm: pior prognóstico</li>
+                            </ul>
+                        </div>
+                        <div class="comorbidity-card">
+                            <h3>⚡ Fibrilação Atrial</h3>
+                            <ul>
+                                <li>Detecção por irregularidade do pulso</li>
+                                <li>HRV extremamente variável</li>
+                                <li>Episódios paroxísticos requerem monitoramento</li>
+                                <li>Risco de AVC aumentado 5x</li>
+                            </ul>
+                        </div>
+                        <div class="comorbidity-card">
+                            <h3>⚖️ Obesidade (IMC &gt; 30)</h3>
+                            <ul>
+                                <li>Limites de PA mais rigorosos</li>
+                                <li>Maior prevalência de apneia do sono</li>
+                                <li>HRV reduzida mesmo sem doença cardíaca</li>
+                                <li>Perda de 5-10% peso melhora todos parâmetros</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Alert System Explanation -->
+                <section class="research-card alert-info">
+                    <div class="research-header">
+                        <h2>🔔 Sistema de Alertas CardioRisk AI</h2>
+                    </div>
+
+                    <p class="research-intro">
+                        Nosso sistema monitora continuamente seus dados de wearables e emite alertas baseados nos
+                        parâmetros científicos acima. Os alertas são categorizados por prioridade:
+                    </p>
+
+                    <div class="alert-categories">
+                        <div class="alert-example critical">
+                            <span class="alert-icon">🚨</span>
+                            <div>
+                                <h4>Crítico</h4>
+                                <p>Requer atenção médica imediata (ex: PA &gt; 180/120, SpO2 &lt; 85%, FC &gt; 150 bpm
+                                    sustentada)</p>
+                            </div>
+                        </div>
+                        <div class="alert-example high">
+                            <span class="alert-icon">⚠️</span>
+                            <div>
+                                <h4>Alto</h4>
+                                <p>Consulta médica nas próximas 24-48h (ex: HRV declinando 30% em 7 dias, FC repouso
+                                    &gt;
+                                    100)</p>
+                            </div>
+                        </div>
+                        <div class="alert-example moderate">
+                            <span class="alert-icon">⚡</span>
+                            <div>
+                                <h4>Moderado</h4>
+                                <p>Monitorar de perto (ex: Sono &lt; 5h por 3 noites, SpO2 90-94%)</p>
+                            </div>
+                        </div>
+                        <div class="alert-example info">
+                            <span class="alert-icon">💡</span>
+                            <div>
+                                <h4>Informativo</h4>
+                                <p>Recomendações de estilo de vida (ex: Atividade física baixa, hidratação)</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="help-tab">
+        <span class="help-icon">❓</span>
+        <span class="help-text">Ajuda</span>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Conectar Dispositivos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="medical_research.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .setup-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .device-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .device-card:hover {
+            border-color: rgba(99, 102, 241, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+        }
+
+        .device-card.connected {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .device-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .device-card h3 {
+            color: white;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .device-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .capabilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .capability-badge {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .connect-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .connect-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .disconnect-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-connected {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .status-disconnected {
+            background: rgba(156, 163, 175, 0.2);
+            color: #9ca3af;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-connected .status-dot {
+            background: #22c55e;
+        }
+
+        .status-disconnected .status-dot {
+            background: #9ca3af;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .instructions {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .instructions h3 {
+            color: #60a5fa;
+            margin-top: 0;
+        }
+
+        .instructions ol {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        .api-config-warning {
+            background: rgba(249, 115, 22, 0.15);
+            border: 2px solid #f97316;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            color: #fb923c;
+        }
+
+        .api-config-warning h3 {
+            margin-top: 0;
+            color: #f97316;
+        }
+
+        .code-snippet {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item"><span class="icon">🏃</span></a>
+                <a href="medical_research.html" class="nav-item"><span class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item active"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Integração</span>
+                    <h1>Conectar Dispositivos</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User"
+                            class="avatar-img">
+                    </div>
+                </div>
+            </header>
+
+            <div class="setup-container">
+                <!-- API Configuration Status -->
+                <div id="api-status-banner"></div>
+
+                <!-- Connection Status -->
+                <section class="research-card">
+                    <h2>Status da Conexão</h2>
+                    <div id="connection-status">
+                        <div class="status-indicator status-disconnected">
+                            <span class="status-dot"></span>
+                            <span>Verificando...</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Instructions -->
+                <div class="instructions">
+                    <h3>📋 Como Conectar Seu Dispositivo</h3>
+                    <ol>
+                        <li><strong>Escolha seu dispositivo</strong> abaixo (Apple Watch, Fitbit, Garmin, etc.)</li>
+                        <li><strong>Clique em "Conectar"</strong> - você será redirecionado para autorizar o acesso</li>
+                        <li><strong>Faça login</strong> com sua conta do fabricante do dispositivo</li>
+                        <li><strong>Autorize o acesso</strong> aos seus dados de saúde</li>
+                        <li><strong>Aguarde</strong> - você será redirecionado de volta automaticamente</li>
+                    </ol>
+                    <p><strong>🔒 Privacidade:</strong> Seus dados são criptografados e nunca compartilhados com
+                        terceiros. Você pode desconectar a qualquer momento.</p>
+                </div>
+
+                <!-- Device Selection -->
+                <section class="research-card">
+                    <h2>Dispositivos Disponíveis</h2>
+                    <div class="device-grid" id="device-grid">
+                        <!-- Devices will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Connected Devices -->
+                <section class="research-card" id="connected-devices-section" style="display: none;">
+                    <h2>Dispositivos Conectados</h2>
+                    <div id="connected-devices-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="help-tab">
+        <span class="help-icon">❓</span>
+        <span class="help-text">Ajuda</span>
+    </div>
+
+    <script src="api_config.js"></script>
+    <script src="wearable_integration.js"></script>
+    <script>
+        // Check API configuration
+        function checkAPIConfiguration() {
+            const banner = document.getElementById('api-status-banner');
+
+            if (!API_HELPERS.isConfigured()) {
+                banner.innerHTML = `
+                    <div class="api-config-warning">
+                        <h3>⚠️ Configuração Necessária</h3>
+                        <p>Para conectar dispositivos, você precisa configurar suas credenciais Terra API:</p>
+                        <ol>
+                            <li>Crie uma conta em <a href="https://dashboard.tryterra.co/" target="_blank" style="color: #60a5fa;">Terra Dashboard</a></li>
+                            <li>Obtenha sua API Key e Dev ID</li>
+                            <li>Edite o arquivo <code>api_config.js</code> e adicione suas credenciais:</li>
+                        </ol>
+                        <div class="code-snippet">
+TERRA_API_KEY: 'sua_api_key_aqui',<br>
+TERRA_DEV_ID: 'seu_dev_id_aqui'
+                        </div>
+                        <p><strong>Alternativa:</strong> Se preferir, pode criar aplicativos nativos iOS/Android para integração direta (sem custos de API terceirizada).</p>
+                    </div>
+                `;
+                return false;
+            }
+            return true;
+        }
+
+        // Update connection status
+        function updateConnectionStatus() {
+            const status = wearableIntegration.getConnectionStatus();
+            const statusEl = document.getElementById('connection-status');
+
+            if (status.status === 'connected') {
+                statusEl.innerHTML = `
+                    <div class="status-indicator status-connected">
+                        <span class="status-dot"></span>
+                        <span>${status.message}</span>
+                    </div>
+                `;
+
+                // Show connected devices section
+                document.getElementById('connected-devices-section').style.display = 'block';
+                updateConnectedDevicesList();
+            } else {
+                statusEl.innerHTML = `
+                    <div class="status-indicator status-disconnected">
+                        <span class="status-dot"></span>
+                        <span>${status.message}</span>
+                    </div>
+                `;
+                document.getElementById('connected-devices-section').style.display = 'none';
+            }
+        }
+
+        // Populate device grid
+        function populateDeviceGrid() {
+            const grid = document.getElementById('device-grid');
+            const apiConfigured = API_HELPERS.isConfigured();
+
+            API_CONFIG.SUPPORTED_PROVIDERS.forEach(provider => {
+                const isConnected = wearableIntegration.connectedDevices.some(d => d.provider === provider.id);
+
+                const card = document.createElement('div');
+                card.className = `device-card ${isConnected ? 'connected' : ''}`;
+
+                const capabilities = provider.capabilities.map(cap =>
+                    `<span class="capability-badge">${cap.replace('_', ' ')}</span>`
+                ).join('');
+
+                card.innerHTML = `
+                    <div class="device-icon">${provider.icon}</div>
+                    <h3>${provider.name}</h3>
+                    <p>${provider.description}</p>
+                    <div class="capabilities">
+                        ${capabilities}
+                    </div>
+                    <button 
+                        class="connect-btn ${isConnected ? 'disconnect-btn' : ''}" 
+                        data-provider="${provider.id}"
+                        ${!apiConfigured ? 'disabled' : ''}
+                    >
+                        ${isConnected ? 'Desconectar' : 'Conectar'}
+                    </button>
+                `;
+
+                // Add click handler
+                const btn = card.querySelector('.connect-btn');
+                btn.addEventListener('click', () => handleDeviceAction(provider.id, isConnected));
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Handle device connect/disconnect
+        async function handleDeviceAction(providerId, isConnected) {
+            if (isConnected) {
+                // Disconnect
+                const device = wearableIntegration.connectedDevices.find(d => d.provider === providerId);
+                if (device && confirm('Desconectar este dispositivo?')) {
+                    try {
+                        await wearableIntegration.disconnectDevice(device.userId);
+                        alert('Dispositivo desconectado com sucesso!');
+                        location.reload();
+                    } catch (error) {
+                        alert('Erro ao desconectar: ' + error.message);
+                    }
+                }
+            } else {
+                // Connect
+                try {
+                    const result = await wearableIntegration.connectDevice(providerId);
+                    // Widget will open in new window
+                    alert('Janela de autorização aberta! Faça login e autorize o acesso aos seus dados de saúde.');
+                } catch (error) {
+                    alert('Erro ao conectar: ' + error.message);
+                }
+            }
+        }
+
+        // Update connected devices list
+        function updateConnectedDevicesList() {
+            const list = document.getElementById('connected-devices-list');
+
+            if (wearableIntegration.connectedDevices.length === 0) {
+                list.innerHTML = '<p>Nenhum dispositivo conectado ainda.</p>';
+                return;
+            }
+
+            list.innerHTML = wearableIntegration.connectedDevices.map(device => {
+                const provider = API_HELPERS.getProvider(device.provider);
+                const connectedDate = new Date(device.connectedAt).toLocaleDateString('pt-BR');
+                const lastSync = device.lastSync ? new Date(device.lastSync).toLocaleString('pt-BR') : 'Nunca';
+
+                return `
+                    <div class="device-card connected">
+                        <div class="device-icon">${provider.icon}</div>
+                        <h3>${provider.name}</h3>
+                        <p>Conectado em: ${connectedDate}</p>
+                        <p>Última sincronização: ${lastSync}</p>
+                        <button class="connect-btn disconnect-btn" onclick="disconnectDevice('${device.userId}')">
+                            Desconectar
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Disconnect device function
+        async function disconnectDevice(userId) {
+            if (confirm('Desconectar este dispositivo?')) {
+                try {
+                    await wearableIntegration.disconnectDevice(userId);
+                    alert('Dispositivo desconectado!');
+                    location.reload();
+                } catch (error) {
+                    alert('Erro: ' + error.message);
+                }
+            }
+        }
+
+        // Check for OAuth redirect
+        function checkOAuthReturn() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (urlParams.get('success') === 'true') {
+                alert('✅ Dispositivo conectado com sucesso! Iniciando sincronização...');
+                // The device should be registered by the OAuth callback
+                // Start sync
+                wearableIntegration.syncAllDevices().then(() => {
+                    location.href = 'wearable_setup.html'; // Clean URL
+                });
+            } else if (urlParams.get('error') === 'true') {
+                alert('❌ Erro ao conectar dispositivo. Por favor, tente novamente.');
+                location.href = 'wearable_setup.html'; // Clean URL
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAPIConfiguration();
+            updateConnectionStatus();
+            populateDeviceGrid();
+            checkOAuthReturn();
+        });
+    </script>
+</body>
+
+</html>

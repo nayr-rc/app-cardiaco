@@ -85,6 +85,104 @@ async function initDashboard() {
     } catch (e) {
         console.error("Failed to load dashboard data:", e);
     }
+
+    // 5. Initialize Wearable Integration (if available)
+    if (typeof wearableIntegration !== 'undefined') {
+        try {
+            const connectionStatus = wearableIntegration.getConnectionStatus();
+
+            if (connectionStatus.status === 'connected') {
+                console.log('Wearable devices connected, starting sync...');
+
+                // Start auto-sync
+                wearableIntegration.startAutoSync();
+
+                // Initial sync and alert check
+                const syncResults = await wearableIntegration.syncAllDevices();
+
+                if (syncResults.length > 0 && syncResults[0].success) {
+                    const wearableData = syncResults[0].data;
+
+                    // Extract and process data for alerts
+                    const hrData = wearableIntegration.extractHeartRateData(wearableData.daily);
+                    const hrvData = wearableIntegration.extractHRVData(wearableData.daily);
+                    const sleepData = wearableIntegration.extractSleepData(wearableData.sleep);
+                    const spo2Data = wearableIntegration.extractSpO2Data(wearableData.daily);
+
+                    // Process data through alert system
+                    if (typeof alertSystem !== 'undefined') {
+                        alertSystem.processWearableData({
+                            heartRate: hrData,
+                            hrv: hrvData,
+                            sleep: sleepData,
+                            spo2: spo2Data
+                        });
+
+                        // Display active alerts
+                        displayActiveAlerts();
+                    }
+                }
+            }
+        } catch (e) {
+            console.warn('Wearable integration error:', e);
+        }
+    }
 }
 
+// Display active alerts on dashboard
+function displayActiveAlerts() {
+    if (typeof alertSystem === 'undefined') return;
+
+    const alerts = alertSystem.getActiveAlerts();
+
+    if (alerts.length === 0) return;
+
+    // Create alert container if it doesn't exist
+    let alertContainer = document.getElementById('alert-container');
+    if (!alertContainer) {
+        alertContainer = document.createElement('div');
+        alertContainer.id = 'alert-container';
+        alertContainer.className = 'alert-container';
+
+        const mainContent = document.querySelector('.main-content');
+        const topBar = document.querySelector('.top-bar');
+        mainContent.insertBefore(alertContainer, topBar.nextSibling);
+    }
+
+    // Clear existing alerts
+    alertContainer.innerHTML = '';
+
+    // Show critical and high priority alerts
+    const priorityAlerts = alerts.filter(a => a.severity === 'critical' || a.severity === 'high');
+
+    priorityAlerts.slice(0, 3).forEach(alert => {
+        const alertEl = document.createElement('div');
+        alertEl.className = `alert alert-${alert.severity}`;
+        alertEl.innerHTML = `
+            <div class="alert-icon">${alert.severity === 'critical' ? '🚨' : '⚠️'}</div>
+            <div class="alert-content">
+                <strong>${alert.title}</strong>
+                <p>${alert.message}</p>
+            </div>
+            <button class="alert-dismiss" onclick="dismissAlert('${alert.id}')">✕</button>
+        `;
+        alertContainer.appendChild(alertEl);
+    });
+}
+
+// Dismiss alert function
+function dismissAlert(alertId) {
+    if (typeof alertSystem !== 'undefined') {
+        alertSystem.dismissAlert(alertId);
+        displayActiveAlerts();
+    }
+}
+
+// Listen for new alerts
+window.addEventListener('cardiorisk:alert', (event) => {
+    console.log('New alert:', event.detail);
+    displayActiveAlerts();
+});
+
 document.addEventListener('DOMContentLoaded', initDashboard);
+
