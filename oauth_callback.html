@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Fit OAuth Callback</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="message">
+        <div class="spinner"></div>
+        <h2>Conectando ao Google Fit...</h2>
+        <p>Você será redirecionado automaticamente.</p>
+    </div>
+
+    <script>
+        // Extract token from URL hash
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+
+        const accessToken = params.get('access_token');
+        const expiresIn = params.get('expires_in');
+
+        if (accessToken) {
+            // Save token to localStorage
+            localStorage.setItem('googlefit_access_token', accessToken);
+            const expiry = Date.now() + (parseInt(expiresIn) * 1000);
+            localStorage.setItem('googlefit_token_expiry', expiry.toString());
+
+            // Close popup or redirect back
+            if (window.opener) {
+                // We're in a popup
+                window.opener.postMessage({
+                    type: 'googlefit_auth_success',
+                    accessToken,
+                    expiresIn
+                }, window.location.origin);
+
+                setTimeout(() => {
+                    window.close();
+                }, 1000);
+            } else {
+                // We're in the same window, redirect to setup page
+                window.location.href = '/wearable_setup.html?success=googlefit';
+            }
+        } else {
+            // Error in OAuth
+            console.error('No access token received');
+            if (window.opener) {
+                window.opener.postMessage({
+                    type: 'googlefit_auth_error',
+                    error: 'No access token'
+                }, window.location.origin);
+                window.close();
+            } else {
+                window.location.href = '/wearable_setup.html?error=googlefit';
+            }
+        }
+    </script>
+</body>
+
+</html>

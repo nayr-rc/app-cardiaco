@@ -238,6 +238,53 @@
                 <!-- API Configuration Status -->
                 <div id="api-status-banner"></div>
 
+                <!-- Integration Method Selection -->
+                <section class="research-card">
+                    <h2>Escolha o Método de Integração</h2>
+                    <div class="device-grid">
+                        <div class="device-card" style="cursor: pointer;" id="googlefit-option">
+                            <div class="device-icon">🔴</div>
+                            <h3>Google Fit API</h3>
+                            <div class="status-indicator status-connected">
+                                <span
+                                    style="background: #22c55e; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
+                                <span>GRATUITA!</span>
+                            </div>
+                            <p>API REST oficial do Google - 100% gratuita</p>
+                            <div class="capabilities">
+                                <span class="capability-badge">FC</span>
+                                <span class="capability-badge">Passos</span>
+                                <span class="capability-badge">Sono</span>
+                                <span class="capability-badge">Atividades</span>
+                            </div>
+                            <button class="connect-btn" onclick="selectGoogleFit()" style="margin-top: 1rem;">
+                                Usar Google Fit
+                            </button>
+                        </div>
+
+                        <div class="device-card" style="opacity: 0.6;">
+                            <div class="device-icon">🔗</div>
+                            <h3>Terra API</h3>
+                            <div class="status-indicator" style="background: rgba(249, 115, 22, 0.2); color: #f97316;">
+                                <span
+                                    style="background: #f97316; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
+                                <span>PAGA</span>
+                            </div>
+                            <p>Múltiplos provedores (Apple, Fitbit, etc.) - $50-200/mês</p>
+                            <div class="capabilities">
+                                <span class="capability-badge">FC</span>
+                                <span class="capability-badge">HRV</span>
+                                <span class="capability-badge">Sono</span>
+                                <span class="capability-badge">SpO2</span>
+                                <span class="capability-badge">ECG</span>
+                            </div>
+                            <button class="connect-btn" disabled style="margin-top: 1rem; opacity: 0.5;">
+                                Requer Assinatura
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Connection Status -->
                 <section class="research-card">
                     <h2>Status da Conexão</h2>
@@ -287,6 +334,8 @@
 
     <script src="api_config.js"></script>
     <script src="wearable_integration.js"></script>
+    <script src="google_fit_config.js"></script>
+    <script src="google_fit_integration.js"></script>
     <script>
         // Check API configuration
         function checkAPIConfiguration() {
@@ -470,6 +519,71 @@ TERRA_DEV_ID: 'seu_dev_id_aqui'
             updateConnectionStatus();
             populateDeviceGrid();
             checkOAuthReturn();
+        });
+
+        // Select Google Fit integration
+        function selectGoogleFit() {
+            if (!GOOGLE_FIT_HELPERS.isConfigured()) {
+                alert('⚠️ Configuração necessária!\\n\\nPor favor, siga o guia GOOGLE_FIT_SETUP.md para configurar seu Client ID do Google.');
+                window.open('GOOGLE_FIT_SETUP.md', '_blank');
+                return;
+            }
+
+            // Hide other options and show Google Fit connection
+            document.getElementById('connection-status').innerHTML = `
+                <div class="info-box">
+                    <strong>🔴 Google Fit API Selecionada</strong>
+                    <p>Clique no botão abaixo para autorizar o acesso aos seus dados do Google Fit.</p>
+                    <button class="connect-btn" onclick="connectToGoogleFit()" style="width: auto; margin-top: 1rem;">
+                        🔗 Conectar ao Google Fit
+                    </button>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                        Você será redirecionado para fazer login com sua conta Google e autorizar o acesso.
+                    </p>
+                </div>
+            `;
+        }
+
+        // Connect to Google Fit
+        async function connectToGoogleFit() {
+            try {
+                const result = await googleFitIntegration.connectGoogleFit();
+
+                if (result.success) {
+                    alert('✅ Conectado ao Google Fit!\\n\\nIniciando sincronização...');
+
+                    // Start sync
+                    const syncResult = await googleFitIntegration.syncAllData();
+
+                    if (syncResult.success) {
+                        alert(`✅ Sincronização concluída!\\n\\n` +
+                            `- Freq Cardíaca: ${syncResult.data.heartRate.length} registros\\n` +
+                            `- Passos: ${syncResult.data.steps.length} registros\\n` +
+                            `- Sono: ${syncResult.data.sleep.length} registros`);
+
+                        location.reload();
+                    }
+                }
+            } catch (error) {
+                alert('❌ Erro ao conectar:\\n\\n' + error.message);
+            }
+        }
+
+        // Check for Google Fit auth success
+        window.addEventListener('message', (event) => {
+            if (event.origin !== window.location.origin) return;
+
+            if (event.data.type === 'googlefit_auth_success') {
+                alert('✅ Autorização concedida!\\n\\nIniciando sincronização...');
+
+                googleFitIntegration.syncAllData().then(result => {
+                    if (result.success) {
+                        location.reload();
+                    }
+                });
+            } else if (event.data.type === 'googlefit_auth_error') {
+                alert('❌ Erro na autorização: ' + event.data.error);
+            }
         });
     </script>
 </body>
