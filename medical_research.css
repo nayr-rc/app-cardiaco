@@ -77,10 +77,11 @@
 }
 
 .research-intro {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1.6;
     margin-bottom: 1.5rem;
     font-size: 1.05rem;
+    font-weight: 400;
 }
 
 /* Parameter Grid */
@@ -195,31 +196,36 @@
 .table-row.normal {
     background: rgba(34, 197, 94, 0.1);
     border-color: #22c55e;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
 }
 
 .table-row.low-risk {
     background: rgba(234, 179, 8, 0.1);
     border-color: #eab308;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
 }
 
 .table-row.warning {
     background: rgba(249, 115, 22, 0.1);
     border-color: #f97316;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
 }
 
 .table-row.moderate {
     background: rgba(251, 146, 60, 0.1);
     border-color: #fb923c;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
 }
 
 .table-row.high {
     background: rgba(239, 68, 68, 0.1);
     border-color: #ef4444;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
 }
 
 /* Info Boxes */
@@ -229,8 +235,9 @@
     padding: 1rem 1.5rem;
     border-radius: 8px;
     margin: 1rem 0;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1.6;
+    font-weight: 400;
 }
 
 .info-box strong {
@@ -259,10 +266,11 @@
 
 .citations li {
     padding: 0.75rem 0;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.85);
     line-height: 1.5;
     font-size: 0.9rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-weight: 400;
 }
 
 .citations li:last-child {
@@ -404,9 +412,10 @@
 
 .sleep-metric p {
     margin-top: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 0.9rem;
     line-height: 1.5;
+    font-weight: 400;
 }
 
 /* Comorbidity Grid */
@@ -446,9 +455,10 @@
 .comorbidity-card li {
     padding: 0.5rem 0;
     padding-left: 1.5rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.5;
     position: relative;
+    font-weight: 400;
 }
 
 .comorbidity-card li::before {
