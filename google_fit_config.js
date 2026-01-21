@@ -4,7 +4,7 @@
 const GOOGLE_FIT_CONFIG = {
     // OAuth 2.0 Configuration
     // Obtenha em: https://console.cloud.google.com/apis/credentials
-    CLIENT_ID: 'SEU_CLIENT_ID_AQUI.apps.googleusercontent.com',
+    CLIENT_ID: '463730080607-bv8crsq0p752ft5c9cuu5g9nhlblpi8f.apps.googleusercontent.com',
     CLIENT_SECRET: 'SEU_CLIENT_SECRET_AQUI', // Opcional para web apps públicos
 
     // Redirect URI (deve ser registrado no Google Cloud Console)

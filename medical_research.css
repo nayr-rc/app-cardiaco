@@ -1,5 +1,10 @@
 /* Medical Research Page Styles */
 
+/* Override body background for medical page */
+body {
+    background: #1a1d2e !important;
+}
+
 /* Medical Disclaimer Banner */
 .medical-disclaimer {
     background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
@@ -36,17 +41,17 @@
 
 /* Research Cards */
 .research-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
     padding: 2rem;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .research-card:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
 }
 
@@ -62,7 +67,7 @@
 .research-header h2 {
     font-size: 1.6rem;
     font-weight: 700;
-    color: white;
+    color: #1a1a1a;
     margin: 0;
 }
 
@@ -77,7 +82,7 @@
 }
 
 .research-intro {
-    color: rgba(255, 255, 255, 0.95);
+    color: #2a2a2a;
     line-height: 1.6;
     margin-bottom: 1.5rem;
     font-size: 1.05rem;
@@ -109,6 +114,7 @@
     font-size: 1.1rem;
     font-weight: 700;
     margin: 0 0 1rem 0;
+    color: inherit;
 }
 
 .parameter-card .threshold {
@@ -117,49 +123,52 @@
     align-items: center;
     margin: 0.5rem 0;
     padding: 0.5rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 8px;
 }
 
 .parameter-card .metric {
     font-weight: 600;
     font-size: 0.9rem;
+    color: inherit;
 }
 
 .parameter-card .value {
     font-weight: 700;
     font-size: 1.1rem;
+    color: inherit;
 }
 
 .parameter-card .description {
     margin-top: 1rem;
     font-size: 0.9rem;
-    opacity: 0.9;
+    opacity: 0.85;
+    color: inherit;
 }
 
 /* Risk Level Colors */
 .risk-normal {
     background: rgba(34, 197, 94, 0.15);
-    border-color: #22c55e;
-    color: #22c55e;
+    border-color: #16a34a;
+    color: #15803d;
 }
 
 .risk-low {
     background: rgba(234, 179, 8, 0.15);
-    border-color: #eab308;
-    color: #fbbf24;
+    border-color: #ca8a04;
+    color: #a16207;
 }
 
 .risk-moderate {
     background: rgba(249, 115, 22, 0.15);
-    border-color: #f97316;
-    color: #fb923c;
+    border-color: #ea580c;
+    color: #c2410c;
 }
 
 .risk-high {
     background: rgba(239, 68, 68, 0.15);
-    border-color: #ef4444;
-    color: #ef4444;
+    border-color: #dc2626;
+    color: #b91c1c;
 }
 
 /* Threshold Table */
@@ -187,61 +196,61 @@
 }
 
 .table-row.header-row {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(99, 102, 241, 0.15);
     border-left: none;
     font-weight: 700;
-    color: white;
+    color: #1a1a1a;
 }
 
 .table-row.normal {
     background: rgba(34, 197, 94, 0.1);
-    border-color: #22c55e;
-    color: rgba(255, 255, 255, 0.95);
+    border-color: #16a34a;
+    color: #15803d;
     font-weight: 500;
 }
 
 .table-row.low-risk {
     background: rgba(234, 179, 8, 0.1);
-    border-color: #eab308;
-    color: rgba(255, 255, 255, 0.95);
+    border-color: #ca8a04;
+    color: #a16207;
     font-weight: 500;
 }
 
 .table-row.warning {
     background: rgba(249, 115, 22, 0.1);
-    border-color: #f97316;
-    color: rgba(255, 255, 255, 0.95);
+    border-color: #ea580c;
+    color: #c2410c;
     font-weight: 500;
 }
 
 .table-row.moderate {
     background: rgba(251, 146, 60, 0.1);
-    border-color: #fb923c;
-    color: rgba(255, 255, 255, 0.95);
+    border-color: #ea580c;
+    color: #c2410c;
     font-weight: 500;
 }
 
 .table-row.high {
     background: rgba(239, 68, 68, 0.1);
-    border-color: #ef4444;
-    color: rgba(255, 255, 255, 0.95);
+    border-color: #dc2626;
+    color: #b91c1c;
     font-weight: 500;
 }
 
 /* Info Boxes */
 .info-box {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
-    border-left: 4px solid #3b82f6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%);
+    border-left: 4px solid #2563eb;
     padding: 1rem 1.5rem;
     border-radius: 8px;
     margin: 1rem 0;
-    color: rgba(255, 255, 255, 0.95);
+    color: #1e40af;
     line-height: 1.6;
     font-weight: 400;
 }
 
 .info-box strong {
-    color: #60a5fa;
+    color: #1e40af;
     font-weight: 700;
 }
 
@@ -253,7 +262,7 @@
 }
 
 .citations h4 {
-    color: rgba(255, 255, 255, 0.9);
+    color: #2a2a2a;
     font-size: 1rem;
     margin-bottom: 0.75rem;
 }
@@ -266,10 +275,10 @@
 
 .citations li {
     padding: 0.75rem 0;
-    color: rgba(255, 255, 255, 0.85);
+    color: #4a4a4a;
     line-height: 1.5;
     font-size: 0.9rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     font-weight: 400;
 }
 
@@ -278,8 +287,9 @@
 }
 
 .citations em {
-    color: rgba(167, 139, 250, 0.9);
+    color: #7c3aed;
     font-style: italic;
+    font-weight: 500;
 }
 
 /* Blood Pressure Categories */
@@ -307,6 +317,7 @@
     font-size: 1rem;
     font-weight: 700;
     margin: 0 0 0.75rem 0;
+    color: inherit;
 }
 
 .bp-value {
@@ -323,32 +334,32 @@
 
 .category-normal {
     background: rgba(34, 197, 94, 0.15);
-    border-color: #22c55e;
-    color: #22c55e;
+    border-color: #16a34a;
+    color: #15803d;
 }
 
 .category-elevated {
     background: rgba(234, 179, 8, 0.15);
-    border-color: #eab308;
-    color: #fbbf24;
+    border-color: #ca8a04;
+    color: #a16207;
 }
 
 .category-stage1 {
     background: rgba(249, 115, 22, 0.15);
-    border-color: #f97316;
-    color: #fb923c;
+    border-color: #ea580c;
+    color: #c2410c;
 }
 
 .category-stage2 {
     background: rgba(239, 68, 68, 0.15);
-    border-color: #ef4444;
-    color: #ef4444;
+    border-color: #dc2626;
+    color: #b91c1c;
 }
 
 .category-crisis {
     background: rgba(220, 38, 38, 0.2);
-    border-color: #dc2626;
-    color: #dc2626;
+    border-color: #991b1b;
+    color: #991b1b;
     animation: pulse-crisis 2s ease-in-out infinite;
 }
 
@@ -387,14 +398,14 @@
 }
 
 .sleep-metric h3 {
-    color: #a5b4fc;
+    color: #4338ca;
     font-size: 1.1rem;
     margin: 0 0 1rem 0;
 }
 
 .metric-optimal {
     background: rgba(34, 197, 94, 0.15);
-    color: #22c55e;
+    color: #15803d;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     margin: 0.5rem 0;
@@ -403,7 +414,7 @@
 
 .metric-warning {
     background: rgba(239, 68, 68, 0.15);
-    color: #ef4444;
+    color: #b91c1c;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     margin: 0.5rem 0;
@@ -412,7 +423,7 @@
 
 .sleep-metric p {
     margin-top: 1rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: #4a4a4a;
     font-size: 0.9rem;
     line-height: 1.5;
     font-weight: 400;
@@ -441,7 +452,7 @@
 }
 
 .comorbidity-card h3 {
-    color: #c084fc;
+    color: #6b21a8;
     font-size: 1.1rem;
     margin: 0 0 1rem 0;
 }
@@ -455,7 +466,7 @@
 .comorbidity-card li {
     padding: 0.5rem 0;
     padding-left: 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: #3a3a3a;
     line-height: 1.5;
     position: relative;
     font-weight: 400;
@@ -465,7 +476,7 @@
     content: "→";
     position: absolute;
     left: 0;
-    color: #c084fc;
+    color: #7c3aed;
     font-weight: 700;
 }
 
@@ -516,26 +527,26 @@
 
 .alert-example.critical {
     background: rgba(220, 38, 38, 0.15);
-    border-color: #dc2626;
-    color: #ef4444;
+    border-color: #991b1b;
+    color: #991b1b;
 }
 
 .alert-example.high {
     background: rgba(249, 115, 22, 0.15);
-    border-color: #f97316;
-    color: #fb923c;
+    border-color: #ea580c;
+    color: #c2410c;
 }
 
 .alert-example.moderate {
     background: rgba(234, 179, 8, 0.15);
-    border-color: #eab308;
-    color: #fbbf24;
+    border-color: #ca8a04;
+    color: #a16207;
 }
 
 .alert-example.info {
     background: rgba(59, 130, 246, 0.15);
-    border-color: #3b82f6;
-    color: #60a5fa;
+    border-color: #1d4ed8;
+    color: #1e40af;
 }
 
 /* Responsive Design */
