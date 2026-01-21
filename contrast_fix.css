@@ -1,0 +1,25 @@
+/* FORCE BLACK TEXT EVERYWHERE FOR BETTER CONTRAST */
+
+/* Override all text colors to black */
+.research-header h2,
+.research-intro,
+.table-row,
+.info-box,
+.citations h4,
+.citations li,
+.sleep-metric p,
+.comorbidity-card li,
+.parameter-card .description,
+.bp-card p {
+    color: #000000 !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Card titles */
+.parameter-card h3,
+.bp-card h3,
+.sleep-metric h3,
+.comorbidity-card h3 {
+    color: #000000 !important;
+    text-shadow: none;
+}
