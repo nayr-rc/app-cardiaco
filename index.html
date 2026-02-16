@@ -23,6 +23,7 @@
                 <a href="heart_rate.html" class="nav-item" title="Frequência Cardíaca"><span class="icon">💓</span></a>
                 <a href="trends.html" class="nav-item" title="Tendências"><span class="icon">📊</span></a>
                 <a href="activity.html" class="nav-item" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="uv_map.html" class="nav-item" title="Raios UV"><span class="icon">☀️</span></a>
                 <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
                         class="icon">📚</span></a>
                 <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
@@ -125,6 +126,15 @@
 
                 <!-- Right Column: Community & Map -->
                 <div class="grid-column col-side">
+                    <!-- UV Monitor Card -->
+                    <section class="card mini-card clickable-card" onclick="location.href='uv_map.html'"
+                        style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: white;">
+                        <div class="icon-box" style="background: rgba(255,255,255,0.2); color: white;"><span
+                                class="icon">☀️</span></div>
+                        <h3>Monitor UV</h3>
+                        <p style="color: white; opacity: 0.9;">Incidência Solar: <strong>Baixa</strong></p>
+                    </section>
+
                     <section class="card community-card">
                         <div class="card-header">
                             <h3>Friends</h3>
@@ -148,14 +158,12 @@
                         </div>
                     </section>
 
-                    <section class="card map-card">
+                    <section class="card map-card clickable-card" onclick="location.href='uv_map.html'">
                         <div class="card-header">
-                            <h3>Live Map</h3>
+                            <h3>Rastreamento GPS</h3>
                         </div>
                         <div class="map-placeholder">
-                            <div class="map-overlay">
-                                <span>GPS Active</span>
-                            </div>
+                            <div class="map-overlay">Abrir Mapa Vivo</div>
                         </div>
                     </section>
                 </div>

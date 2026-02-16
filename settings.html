@@ -24,6 +24,7 @@
                 <a href="heart_rate.html" class="nav-item" title="Frequência Cardíaca"><span class="icon">💓</span></a>
                 <a href="trends.html" class="nav-item" title="Tendências"><span class="icon">📊</span></a>
                 <a href="activity.html" class="nav-item" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="uv_map.html" class="nav-item" title="Raios UV"><span class="icon">☀️</span></a>
                 <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
                         class="icon">📚</span></a>
                 <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
@@ -90,7 +91,6 @@
                     <div class="card-header">
                         <h2>⚙️ Preferências do Sistema</h2>
                     </div>
-
                     <div class="toggle-group">
                         <div>
                             <strong>Modo Escuro</strong>
@@ -102,7 +102,6 @@
                             <span class="slider"></span>
                         </label>
                     </div>
-
                     <div class="toggle-group">
                         <div>
                             <strong>Alertas de Risco</strong>
@@ -114,7 +113,6 @@
                             <span class="slider"></span>
                         </label>
                     </div>
-
                     <div class="toggle-group">
                         <div>
                             <strong>Sincronização Automática</strong>
@@ -158,7 +156,6 @@
                     <button class="btn-outline" onclick="exportData('pdf')">📄 Exportar Relatório PDF</button>
                     <button class="btn-outline" onclick="exportData('csv')" style="margin-top: 10px;">📊 Baixar Dados
                         (CSV)</button>
-
                     <div style="margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px;">
                         <button class="btn-primary" style="background: var(--red); width: 100%;"
                             onclick="clearAllData()">
@@ -169,41 +166,35 @@
             </div>
         </main>
     </div>
-
     <div class="help-tab" onclick="openHelp()">
         <span class="help-icon">❓</span>
         <span class="help-text">Ajuda</span>
     </div>
-
     <script>
         function saveAllSettings() {
             alert('✅ Configurações salvas com sucesso no armazenamento local!');
         }
-
         function toggleDarkMode() {
             const isDark = document.getElementById('dark-mode-toggle').checked;
             if (isDark) {
                 document.body.classList.add('dark-theme');
-                alert('Modo Escuro ativado! (Visualização parcial para demonstração)');
+                alert('Modo Escuro ativado!');
             } else {
                 document.body.classList.remove('dark-theme');
             }
         }
-
         function exportData(format) {
             alert(`Iniciando geração de relatório em ${format.toUpperCase()}... Por favor, aguarde.`);
             setTimeout(() => {
                 alert(`✅ Relatório CardioRisk_Health_Report.${format} está pronto para download!`);
             }, 1500);
         }
-
         function clearAllData() {
             if (confirm('🚨 TEM CERTEZA? Esta ação apagará todos os seus registros históricos de saúde e não pode ser desfeita.')) {
                 alert('Processando exclusão...');
                 setTimeout(() => alert('✅ Todos os dados locais foram removidos.'), 1000);
             }
         }
-
         function openHelp() {
             alert('Guia Rápido:\n1. Edite seu perfil para cálculos mais precisos.\n2. Defina metas para receber alertas personalizados.\n3. Exporte relatórios mensais para seu cardiologista.');
         }

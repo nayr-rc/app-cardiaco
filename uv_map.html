@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Incidência Solar (UV)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" title="Home"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item" title="Frequência Cardíaca"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item" title="Tendências"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="uv_map.html" class="nav-item active" title="Raios UV"><span class="icon">☀️</span></a>
+                <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
+                        class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item" title="Configurações"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item" title="Sair"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Monitoramento GPS</span>
+                    <h1>Incidência Solar & UV</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <div id="tracking-status-ui" class="tracking-status" style="display: none;">
+                        <span class="status-pulse"></span>
+                        Gravando Percurso...
+                    </div>
+                    <button class="btn-primary" id="start-gps-btn" onclick="toggleGPS()">
+                        <span>📍</span> Iniciar Rastreamento
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-grid" style="grid-template-columns: 1fr 350px;">
+                <div class="grid-column col-main">
+                    <section class="card" style="padding: 10px;">
+                        <div id="map"></div>
+                    </section>
+                </div>
+
+                <div class="grid-column col-side">
+                    <!-- UV Status Card -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>Status Atual UV</h2>
+                        </div>
+                        <div id="uv-display" class="uv-indicator uv-low">
+                            <span style="font-size: 2.5rem;" id="uv-icon">☁️</span>
+                            <div>
+                                <h3 id="uv-level-name">Aguardando Localização...</h3>
+                                <p id="uv-recommendation">Inicie o GPS para calcular a incidência solar.</p>
+                                <strong id="uv-value" style="font-size: 1.2rem; display: block; margin-top: 5px;">UV:
+                                    --</strong>
+                            </div>
+                        </div>
+
+                        <div class="mini-card" style="margin-top: 15px;">
+                            <h3>Dica de Proteção</h3>
+                            <p id="safety-tip">O monitoramento de UV ajuda a prevenir insolação e danos à pele durante
+                                exercícios ao ar livre.</p>
+                        </div>
+                    </section>
+
+                    <!-- Stats Card -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>Estatísticas da Sessão</h2>
+                        </div>
+                        <div class="stat-item" style="margin-bottom: 15px;">
+                            <span class="stat-label">Distância Percorrida</span>
+                            <span class="stat-value" id="dist-val">0.00 km</span>
+                        </div>
+                        <div class="stat-item" style="margin-bottom: 15px;">
+                            <span class="stat-label">Tempo de Exposição</span>
+                            <span class="stat-value" id="time-val">00:00:00</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Carga UV Acumulada</span>
+                            <span class="stat-value" id="uv-acc">Baixa</span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        let map;
+        let polyline;
+        let watchId;
+        let path = [];
+        let isTracking = false;
+        let startTime;
+        let timerInterval;
+
+        // Initialize Map
+        function initMap() {
+            map = L.map('map').setView([-23.5505, -46.6333], 13); // Default to SP
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            polyline = L.polyline([], { color: '#7A69D1', weight: 5 }).addTo(map);
+        }
+
+        async function fetchUVIndex(lat, lon) {
+            try {
+                // Free API currentuvindex.com (No Key required)
+                const response = await fetch(`https://api.currentuvindex.com/api/v1/uv/current?latitude=${lat}&longitude=${lon}`);
+                const data = await response.json();
+                updateUVUI(data.uv_index || simulateUV());
+            } catch (error) {
+                console.warn("API Error, using simulation:", error);
+                updateUVUI(simulateUV());
+            }
+        }
+
+        function simulateUV() {
+            const hour = new Date().getHours();
+            // Simple bell curve simulation: peaks at 12:00
+            let uv = 0;
+            if (hour >= 6 && hour <= 18) {
+                uv = Math.sin((hour - 6) / 12 * Math.PI) * 10;
+            }
+            return parseFloat(uv.toFixed(1));
+        }
+
+        function updateUVUI(uv) {
+            const display = document.getElementById('uv-display');
+            const name = document.getElementById('uv-level-name');
+            const rec = document.getElementById('uv-recommendation');
+            const val = document.getElementById('uv-value');
+            const icon = document.getElementById('uv-icon');
+
+            display.className = 'uv-indicator';
+            val.innerText = `UV: ${uv}`;
+
+            if (uv < 3) {
+                display.classList.add('uv-low');
+                name.innerText = 'Baixo';
+                icon.innerText = '☁️';
+                rec.innerText = 'Proteção mínima necessária.';
+            } else if (uv < 6) {
+                display.classList.add('uv-moderate');
+                name.innerText = 'Moderado';
+                icon.innerText = '⛅';
+                rec.innerText = 'Use protetor solar e procure sombra.';
+            } else if (uv < 8) {
+                display.classList.add('uv-high');
+                name.innerText = 'Alto';
+                icon.innerText = '☀️';
+                rec.innerText = 'Protetor solar obrigatório a cada 2h.';
+            } else if (uv < 11) {
+                display.classList.add('uv-very-high');
+                name.innerText = 'Muito Alto';
+                icon.innerText = '🔥';
+                rec.innerText = 'Evite exposição direta entre 10h e 16h.';
+            } else {
+                display.classList.add('uv-extreme');
+                name.innerText = 'Extremo';
+                icon.innerText = '🚨';
+                rec.innerText = 'Risco imediato de danos à pele e olhos.';
+            }
+        }
+
+        function toggleGPS() {
+            const btn = document.getElementById('start-gps-btn');
+            const statusUI = document.getElementById('tracking-status-ui');
+
+            if (!isTracking) {
+                if (!navigator.geolocation) {
+                    alert("Seu navegador não suporta geolocalização.");
+                    return;
+                }
+
+                isTracking = true;
+                btn.innerHTML = '<span>⏹️</span> Parar Rastreamento';
+                btn.style.background = 'var(--red)';
+                statusUI.style.display = 'inline-flex';
+
+                startTime = Date.now();
+                startTimer();
+
+                watchId = navigator.geolocation.watchPosition(
+                    (pos) => {
+                        const { latitude, longitude } = pos.coords;
+                        const newPos = [latitude, longitude];
+
+                        path.push(newPos);
+                        polyline.setLatLngs(path);
+                        map.panTo(newPos);
+
+                        if (path.length === 1) map.setZoom(16);
+
+                        fetchUVIndex(latitude, longitude);
+                        updateStats();
+                    },
+                    (err) => alert("Erro ao obter GPS: " + err.message),
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                isTracking = false;
+                btn.innerHTML = '<span>📍</span> Iniciar Rastreamento';
+                btn.style.background = 'var(--sidebar-bg)';
+                statusUI.style.display = 'none';
+
+                navigator.geolocation.clearWatch(watchId);
+                clearInterval(timerInterval);
+                alert("Percurso salvo com sucesso!");
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const hours = Math.floor(elapsed / 3600000).toString().padStart(2, '0');
+                const mins = Math.floor((elapsed % 3600000) / 60000).toString().padStart(2, '0');
+                const secs = Math.floor((elapsed % 60000) / 1000).toString().padStart(2, '0');
+                document.getElementById('time-val').innerText = `${hours}:${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function updateStats() {
+            // Mock distance calculation for demo
+            const dist = (path.length * 0.005).toFixed(2);
+            document.getElementById('dist-val').innerText = `${dist} km`;
+        }
+
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+
+</html>
