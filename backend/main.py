@@ -1,19 +1,19 @@
 import os
 import pandas as pd
 import numpy as np
+import json
+from datetime import datetime
 from data_processor import HealthDataProcessor
 from models.anomaly_detector import CardiacAnomalyDetector
 from synthetic_generator import generate_synthetic_data
+from db_manager import DBManager
 
 def main():
-    print("--- CardioRisk AI: Startup ---")
+    print("--- CardioRisk AI: Startup (Cloud-Sync Only) ---")
     
-    # Path settings
+    # Path settings (Input only)
     raw_data_path = "data/raw/export.xml"
     synthetic_data_path = "data/processed/synthetic_data.csv"
-    dashboard_js_path = "data.js"
-    dashboard_v3_js_path = "v3/data.js"
-    dashboard_output_path = "v3/dashboard_data.json"
     
     # 1. Data Selection & Loading
     df = pd.DataFrame()
@@ -74,10 +74,7 @@ def main():
         
     print(f"STATUS: {status}")
     
-    # 5. Export for Dashboard
-    from datetime import datetime
-    import json
-    
+    # 5. Prepare Data for MongoDB
     dashboard_data = {
         "user": {
             "name": "Usuário CardioRisk",
@@ -100,18 +97,16 @@ def main():
                 "score": round(score, 1)
             })
 
-    # Export to multiple formats and locations for maximum compatibility
-    for path in ["dashboard_data.json", "v3/dashboard_data.json"]:
-        with open(path, "w") as f:
-            json.dump(dashboard_data, f, indent=4)
-            
-    # Export as JS variable to bypass CORS/File protocol restrictions
-    js_content = f"const DASHBOARD_DATA = {json.dumps(dashboard_data, indent=4)};"
-    for path in ["data.js", "v3/data.js"]:
-        with open(path, "w") as f:
-            f.write(js_content)
-            
-    print("\n[SUCCESS] Dashboard updates exported (JSON & JS).")
+    # --- MONGODB INTEGRATION (ALPHA TEST) ---
+    # NO LOCAL SAVING (dashboard_data.json and data.js removed from logic)
+    try:
+        mongo_uri = "mongodb+srv://narsie454_db_user:BH7BP1Wg9sDA5yAY@cardiorisk.zzksboj.mongodb.net/"
+        print("\n[DB] Synchronizing with MongoDB Alpha...")
+        db = DBManager(mongo_uri)
+        db.save_client_data(dashboard_data)
+        print("[SUCCESS] Data synchronized exclusively with MongoDB Cloud.")
+    except Exception as e:
+        print(f"[DB] MongoDB error: {e}")
 
 if __name__ == "__main__":
     main()

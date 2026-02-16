@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HealthData generated="2026-01-12T10:30:00Z" source="Apple Watch Ultra 2">
+
+    <!-- ================= HEART RATE ================= -->
+    <HeartRate unit="bpm">
+        <Record timestamp="2026-01-12T06:10:00Z" value="58"/>
+        <Record timestamp="2026-01-12T06:20:00Z" value="60"/>
+        <Record timestamp="2026-01-12T06:30:00Z" value="62"/>
+        <Record timestamp="2026-01-12T06:40:00Z" value="64"/>
+        <Record timestamp="2026-01-12T07:00:00Z" value="88"/>
+        <Record timestamp="2026-01-12T07:15:00Z" value="102"/>
+        <Record timestamp="2026-01-12T07:30:00Z" value="120"/>
+    </HeartRate>
+
+    <!-- ================= HRV ================= -->
+    <HRV unit="ms">
+        <Record timestamp="2026-01-12T06:30:00Z" value="72"/>
+        <Record timestamp="2026-01-12T07:30:00Z" value="58"/>
+    </HRV>
+
+    <!-- ================= BLOOD OXYGEN ================= -->
+    <BloodOxygen unit="%">
+        <Record timestamp="2026-01-12T06:30:00Z" value="98"/>
+        <Record timestamp="2026-01-12T07:30:00Z" value="96"/>
+    </BloodOxygen>
+
+    <!-- ================= STEPS ================= -->
+    <Steps>
+        <Record timestamp="2026-01-12T06:00:00Z" count="120"/>
+        <Record timestamp="2026-01-12T07:00:00Z" count="680"/>
+        <Record timestamp="2026-01-12T08:00:00Z" count="1400"/>
+        <Record timestamp="2026-01-12T09:00:00Z" count="2150"/>
+    </Steps>
+
+    <!-- ================= CALORIES ================= -->
+    <Calories unit="kcal">
+        <Basal value="1720"/>
+        <Active value="410"/>
+    </Calories>
+
+    <!-- ================= SLEEP ================= -->
+    <Sleep>
+        <Session start="2026-01-11T23:10:00Z" end="2026-01-12T06:00:00Z">
+            <Stage name="Deep" minutes="95"/>
+            <Stage name="REM" minutes="110"/>
+            <Stage name="Light" minutes="165"/>
+            <Stage name="Awake" minutes="20"/>
+        </Session>
+    </Sleep>
+
+    <!-- ================= ACTIVITY ================= -->
+    <Workout type="Running">
+        <Start>2026-01-12T07:05:00Z</Start>
+        <End>2026-01-12T07:35:00Z</End>
+        <Distance unit="km">4.2</Distance>
+        <CaloriesBurned unit="kcal">320</CaloriesBurned>
+        <AverageHeartRate unit="bpm">115</AverageHeartRate>
+    </Workout>
+
+    <!-- ================= STRESS ESTIMATE ================= -->
+    <StressModel source="AI" scale="0-100">
+        <Record timestamp="2026-01-12T06:30:00Z" value="22"/>
+        <Record timestamp="2026-01-12T07:30:00Z" value="48"/>
+    </StressModel>
+
+    <!-- ================= METADATA ================= -->
+    <UserProfile>
+        <Age>28</Age>
+        <Sex>Male</Sex>
+        <Height unit="cm">178</Height>
+        <Weight unit="kg">78</Weight>
+    </UserProfile>
+
+</HealthData>

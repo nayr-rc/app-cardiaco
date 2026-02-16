@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CardioRisk AI - Heart Rate</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -170,11 +170,26 @@
                 alert('📡 Conectando ao sensor... Medição iniciada.');
             } else {
                 isTracking = false;
+                const finalBpm = bpmDisplay.innerText;
                 btn.innerHTML = '<span>▶️</span> Iniciar Medição';
                 btn.style.background = 'var(--sidebar-bg)';
                 clearInterval(trackInterval);
                 heart.style.animationDuration = '1s';
-                alert('💾 Medição finalizada e salva no histórico.');
+
+                // Save to MongoDB
+                fetch('http://localhost:8000/api/save_measurement', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_name: "Usuário CardioRisk",
+                        measurement: { type: 'BPM', value: finalBpm }
+                    })
+                }).then(() => {
+                    alert('✅ Medição salva com sucesso no MongoDB Cloud!');
+                }).catch(err => {
+                    console.error("Erro ao salvar medição:", err);
+                    alert('⚠️ Medição finalizada, mas houve um erro ao sincronizar com a nuvem.');
+                });
             }
         }
     </script>

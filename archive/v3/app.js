@@ -1,13 +1,20 @@
 async function initDashboard() {
     let data;
+    const API_URL = 'http://localhost:8000/api/dashboard';
+
     try {
-        // Try fetching first (works with local servers)
-        const response = await fetch(`dashboard_data.json?v=${new Date().getTime()}`);
+        console.log("Fetching v3 data from Cloud API...");
+        const response = await fetch(`${API_URL}?user_name=Usuário CardioRisk&v=${new Date().getTime()}`);
+        if (!response.ok) throw new Error('API not available');
         data = await response.json();
     } catch (e) {
-        // Fallback to the JS variable (works with file:// protocol)
-        console.warn("Fetch failed, using local DASHBOARD_DATA fallback.");
-        data = typeof DASHBOARD_DATA !== 'undefined' ? DASHBOARD_DATA : null;
+        console.warn("Cloud API fetch failed, trying local fallback:", e);
+        try {
+            const response = await fetch(`dashboard_data.json?v=${new Date().getTime()}`);
+            data = await response.json();
+        } catch (localErr) {
+            data = typeof DASHBOARD_DATA !== 'undefined' ? DASHBOARD_DATA : null;
+        }
     }
 
     if (!data) {

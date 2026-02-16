@@ -47,8 +47,8 @@ def generate_synthetic_data(days=60, anomaly_start_day=50):
     return df
 
 if __name__ == "__main__":
+    # In cloud-native mode, we just return the dataframe
+    # instead of saving to a local CSV.
     df = generate_synthetic_data()
-    output_path = "data/processed/synthetic_data.csv"
-    df.to_csv(output_path, index=False)
-    print(f"Synthetic data generated and saved to {output_path}")
-    print(df.tail(15))
+    print("Synthetic data generated successfuly.")
+    print(df.tail(5))

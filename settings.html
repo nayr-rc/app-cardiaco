@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CardioRisk AI - Configurações</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="contrast_fix.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contrast_fix.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -171,33 +171,110 @@
         <span class="help-text">Ajuda</span>
     </div>
     <script>
-        function saveAllSettings() {
-            alert('✅ Configurações salvas com sucesso no armazenamento local!');
+        const API_BASE_URL = 'http://localhost:8000/api';
+
+        async function loadSettings() {
+            const userName = "Usuário CardioRisk"; // Default for alpha
+            try {
+                const response = await fetch(`${API_BASE_URL}/get_settings?user_name=${encodeURIComponent(userName)}`);
+                const data = await response.json();
+
+                if (data.status !== "not_found") {
+                    // Populate fields
+                    if (data.user) {
+                        document.getElementById('user-name').value = data.user.name || "Usuário CardioRisk";
+                        if (data.user.age) document.getElementById('user-age').value = data.user.age;
+                        if (data.user.gender) document.getElementById('user-gender').value = data.user.gender;
+                        if (data.user.weight) document.getElementById('user-weight').value = data.user.weight;
+                        if (data.user.height) document.getElementById('user-height').value = data.user.height;
+                    }
+
+                    if (data.goals) {
+                        if (data.goals.steps) document.getElementById('goal-steps').value = data.goals.steps;
+                        if (data.goals.hr_high) document.getElementById('goal-hr-high').value = data.goals.hr_high;
+                        if (data.goals.sleep) document.getElementById('goal-sleep').value = data.goals.sleep;
+                    }
+
+                    if (data.preferences) {
+                        document.getElementById('dark-mode-toggle').checked = data.preferences.dark_mode;
+                        if (data.preferences.dark_mode) document.body.classList.add('dark-theme');
+                    }
+                    console.log("Configurações carregadas do MongoDB.");
+                }
+            } catch (error) {
+                console.error("Erro ao carregar configurações do MongoDB:", error);
+            }
         }
+
+        async function saveAllSettings() {
+            const settings = {
+                user: {
+                    name: document.getElementById('user-name').value,
+                    age: document.getElementById('user-age').value,
+                    gender: document.getElementById('user-gender').value,
+                    weight: document.getElementById('user-weight').value,
+                    height: document.getElementById('user-height').value
+                },
+                goals: {
+                    steps: document.getElementById('goal-steps').value,
+                    hr_high: document.getElementById('goal-hr-high').value,
+                    sleep: document.getElementById('goal-sleep').value
+                },
+                preferences: {
+                    dark_mode: document.getElementById('dark-mode-toggle').checked
+                },
+                last_updated_frontend: new Date().toISOString()
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/save_settings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(settings)
+                });
+
+                if (response.ok) {
+                    alert('✅ Configurações salvas com sucesso no MongoDB (Nuvem)!');
+                } else {
+                    throw new Error('Falha ao salvar no servidor');
+                }
+            } catch (error) {
+                console.error("Erro ao salvar:", error);
+                alert('❌ Erro ao salvar no MongoDB. Verifique se o servidor API está rodando.');
+            }
+        }
+
         function toggleDarkMode() {
             const isDark = document.getElementById('dark-mode-toggle').checked;
             if (isDark) {
                 document.body.classList.add('dark-theme');
-                alert('Modo Escuro ativado!');
             } else {
                 document.body.classList.remove('dark-theme');
             }
         }
+
         function exportData(format) {
             alert(`Iniciando geração de relatório em ${format.toUpperCase()}... Por favor, aguarde.`);
             setTimeout(() => {
                 alert(`✅ Relatório CardioRisk_Health_Report.${format} está pronto para download!`);
             }, 1500);
         }
+
         function clearAllData() {
             if (confirm('🚨 TEM CERTEZA? Esta ação apagará todos os seus registros históricos de saúde e não pode ser desfeita.')) {
                 alert('Processando exclusão...');
                 setTimeout(() => alert('✅ Todos os dados locais foram removidos.'), 1000);
             }
         }
+
         function openHelp() {
             alert('Guia Rápido:\n1. Edite seu perfil para cálculos mais precisos.\n2. Defina metas para receber alertas personalizados.\n3. Exporte relatórios mensais para seu cardiologista.');
         }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', loadSettings);
     </script>
 </body>
 

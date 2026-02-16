@@ -1,9 +1,3 @@
-body {
-    background: #1a1d2e !important;
-    color: #ffffff;
-    /* Default for dark background */
-}
-
 /* Fix top bar contrast for dark theme */
 .top-bar .subtitle {
     color: rgba(255, 255, 255, 0.8) !important;
@@ -616,3 +610,5 @@ body {
         box-shadow: none;
     }
 }
+body { color: #000000 !important; }
+.top-bar *, .top-bar h1, .top-bar .subtitle { color: #000000 !important; }

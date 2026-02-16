@@ -10,14 +10,47 @@ class AlertSystem {
     }
 
     // Load active alerts
+    async syncFromCloud() {
+        const userName = "Usuário CardioRisk";
+        try {
+            const response = await fetch(`http://localhost:8000/api/get_alerts?user_name=${encodeURIComponent(userName)}`);
+            const data = await response.json();
+            if (data && data.alerts) {
+                this.alerts = data.alerts;
+                this.saveAlerts(false); // Save to local for fast access
+            }
+        } catch (e) {
+            console.warn("Cloud alert sync failed, using local data", e);
+        }
+    }
+
+    async syncToCloud() {
+        const userName = "Usuário CardioRisk";
+        try {
+            await fetch(`http://localhost:8000/api/save_alerts`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_name: userName,
+                    alerts: this.alerts
+                })
+            });
+        } catch (e) {
+            console.error("Failed to sync alerts to cloud", e);
+        }
+    }
+
     loadAlerts() {
         const stored = localStorage.getItem('cardiorisk_active_alerts');
-        return stored ? JSON.parse(stored) : [];
+        const alerts = stored ? JSON.parse(stored) : [];
+        this.syncFromCloud(); // Trigger async sync
+        return alerts;
     }
 
     // Save active alerts
-    saveAlerts() {
+    saveAlerts(syncCloud = true) {
         localStorage.setItem('cardiorisk_active_alerts', JSON.stringify(this.alerts));
+        if (syncCloud) this.syncToCloud();
     }
 
     // Load alert history

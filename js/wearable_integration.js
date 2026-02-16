@@ -10,15 +10,48 @@ class WearableIntegration {
         this.lastRequestTime = 0;
     }
 
-    // Load connected devices from localStorage
-    loadConnectedDevices() {
-        const stored = localStorage.getItem('cardiorisk_connected_devices');
-        return stored ? JSON.parse(stored) : [];
+    // Load connected devices from cloud/localStorage
+    async syncFromCloud() {
+        const userName = "Usuário CardioRisk";
+        try {
+            const response = await fetch(`http://localhost:8000/api/get_devices?user_name=${encodeURIComponent(userName)}`);
+            const data = await response.json();
+            if (data && data.devices) {
+                this.connectedDevices = data.devices;
+                this.saveConnectedDevices(false); // Save locally for speed
+            }
+        } catch (e) {
+            console.warn("Cloud device sync failed", e);
+        }
     }
 
-    // Save connected devices to localStorage
-    saveConnectedDevices() {
+    async syncToCloud() {
+        const userName = "Usuário CardioRisk";
+        try {
+            await fetch(`http://localhost:8000/api/save_devices`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_name: userName,
+                    devices: this.connectedDevices
+                })
+            });
+        } catch (e) {
+            console.error("Failed to sync devices to cloud", e);
+        }
+    }
+
+    loadConnectedDevices() {
+        const stored = localStorage.getItem('cardiorisk_connected_devices');
+        const devices = stored ? JSON.parse(stored) : [];
+        this.syncFromCloud();
+        return devices;
+    }
+
+    // Save connected devices
+    saveConnectedDevices(syncCloud = true) {
         localStorage.setItem('cardiorisk_connected_devices', JSON.stringify(this.connectedDevices));
+        if (syncCloud) this.syncToCloud();
     }
 
     // Check if any device is connected

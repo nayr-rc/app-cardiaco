@@ -1,15 +1,25 @@
 async function initDashboard() {
     let data;
+    const API_URL = 'http://localhost:8000/api/dashboard';
+
     try {
-        const response = await fetch(`dashboard_data.json?v=${new Date().getTime()}`);
+        console.log("Fetching data from Cloud API...");
+        const response = await fetch(`${API_URL}?user_name=Usuário CardioRisk&v=${new Date().getTime()}`);
+        if (!response.ok) throw new Error('API not available');
         data = await response.json();
+        console.log("Cloud data loaded successfully.");
     } catch (e) {
-        console.warn("Fetch failed, using local DASHBOARD_DATA fallback.");
-        data = typeof DASHBOARD_DATA !== 'undefined' ? DASHBOARD_DATA : null;
+        console.warn("Cloud API fetch failed, trying local fallback:", e);
+        try {
+            const response = await fetch(`dashboard_data.json?v=${new Date().getTime()}`);
+            data = await response.json();
+        } catch (localErr) {
+            data = typeof DASHBOARD_DATA !== 'undefined' ? DASHBOARD_DATA : null;
+        }
     }
 
     if (!data) {
-        console.error("No dashboard data available.");
+        console.error("No dashboard data available from Cloud or Local sources.");
         return;
     }
 
@@ -193,4 +203,3 @@ window.addEventListener('cardiorisk:alert', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', initDashboard);
-

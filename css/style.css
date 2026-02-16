@@ -2,9 +2,9 @@
     --bg-color: #DDE2EF;
     --sidebar-bg: linear-gradient(180deg, #7A69D1 0%, #5E4DB2 100%);
     --card-bg: #FFFFFF;
-    --text-primary: #1a1a1a;
-    --text-secondary: #3a3a3a;
-    --text-muted: #666666;
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --text-muted: #000000;
 
     --purple: #7A69D1;
     --pink: #FE7893;
@@ -845,3 +845,8 @@ input:checked+.slider:before {
         opacity: 0;
     }
 }
+/* TEST */
+
+.card, .research-card, .device-card, .instructions, .info-box, .api-config-warning, .setup-container { background-color: #ffffff !important; color: #000000 !important; }
+.card *, .research-card *, .device-card *, .instructions *, .info-box *, .api-config-warning *, .setup-container * { color: #000000 !important; }
+.research-card h2, .research-card h3, .setup-container h1, .setup-container h2 { color: #000000 !important; font-weight: 700 !important; }
