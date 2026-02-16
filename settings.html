@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Configurações</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="contrast_fix.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" title="Home"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item" title="Frequência Cardíaca"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item" title="Tendências"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
+                        class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item active" title="Configurações"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item" title="Sair"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Personalização</span>
+                    <h1>Configurações</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-primary" onclick="saveAllSettings()">
+                        <span>💾</span> Salvar Alterações
+                    </button>
+                </div>
+            </header>
+
+            <div class="settings-grid">
+                <!-- Profile Settings -->
+                <section class="card settings-section">
+                    <div class="card-header">
+                        <h2>👤 Perfil do Usuário</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" value="Usuário CardioRisk" id="user-name">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label>Idade</label>
+                            <input type="number" value="38" id="user-age">
+                        </div>
+                        <div class="form-group">
+                            <label>Gênero</label>
+                            <select id="user-gender">
+                                <option>Masculino</option>
+                                <option>Feminino</option>
+                                <option>Outro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label>Peso (kg)</label>
+                            <input type="number" value="82" id="user-weight">
+                        </div>
+                        <div class="form-group">
+                            <label>Altura (cm)</label>
+                            <input type="number" value="175" id="user-height">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- System Preferences -->
+                <section class="card settings-section">
+                    <div class="card-header">
+                        <h2>⚙️ Preferências do Sistema</h2>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div>
+                            <strong>Modo Escuro</strong>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Economiza bateria e reduz
+                                fadiga ocular.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div>
+                            <strong>Alertas de Risco</strong>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Notificar sobre anomalias em
+                                tempo real.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div>
+                            <strong>Sincronização Automática</strong>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Atualizar dados do wearable em
+                                segundo plano.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Health Goals -->
+                <section class="card settings-section">
+                    <div class="card-header">
+                        <h2>🎯 Metas de Saúde</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Meta diária de passos</label>
+                        <input type="number" value="10000" id="goal-steps">
+                    </div>
+                    <div class="form-group">
+                        <label>Limite Alerta FC (BPM)</label>
+                        <input type="number" value="110" id="goal-hr-high">
+                    </div>
+                    <div class="form-group">
+                        <label>Meta de Sono Profundo (horas)</label>
+                        <input type="number" value="2" step="0.5" id="goal-sleep">
+                    </div>
+                </section>
+
+                <!-- Data Management -->
+                <section class="card settings-section">
+                    <div class="card-header">
+                        <h2>💾 Gerenciamento de Dados</h2>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">
+                        Exporte seu histórico de saúde para compartilhar com seu médico.
+                    </p>
+                    <button class="btn-outline" onclick="exportData('pdf')">📄 Exportar Relatório PDF</button>
+                    <button class="btn-outline" onclick="exportData('csv')" style="margin-top: 10px;">📊 Baixar Dados
+                        (CSV)</button>
+
+                    <div style="margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px;">
+                        <button class="btn-primary" style="background: var(--red); width: 100%;"
+                            onclick="clearAllData()">
+                            <span>🗑️</span> Limpar Todo o Histórico
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="help-tab" onclick="openHelp()">
+        <span class="help-icon">❓</span>
+        <span class="help-text">Ajuda</span>
+    </div>
+
+    <script>
+        function saveAllSettings() {
+            alert('✅ Configurações salvas com sucesso no armazenamento local!');
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.getElementById('dark-mode-toggle').checked;
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                alert('Modo Escuro ativado! (Visualização parcial para demonstração)');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        function exportData(format) {
+            alert(`Iniciando geração de relatório em ${format.toUpperCase()}... Por favor, aguarde.`);
+            setTimeout(() => {
+                alert(`✅ Relatório CardioRisk_Health_Report.${format} está pronto para download!`);
+            }, 1500);
+        }
+
+        function clearAllData() {
+            if (confirm('🚨 TEM CERTEZA? Esta ação apagará todos os seus registros históricos de saúde e não pode ser desfeita.')) {
+                alert('Processando exclusão...');
+                setTimeout(() => alert('✅ Todos os dados locais foram removidos.'), 1000);
+            }
+        }
+
+        function openHelp() {
+            alert('Guia Rápido:\n1. Edite seu perfil para cálculos mais precisos.\n2. Defina metas para receber alertas personalizados.\n3. Exporte relatórios mensais para seu cardiologista.');
+        }
+    </script>
+</body>
+
+</html>

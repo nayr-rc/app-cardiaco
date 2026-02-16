@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk AI - Heart Rate</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .pulse-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            position: relative;
+        }
+
+        .heart-icon {
+            font-size: 5rem;
+            color: var(--pink);
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.2);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.1);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        .bpm-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-top: 10px;
+        }
+
+        .bpm-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">C</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" title="Home"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item active" title="Frequência Cardíaca"><span
+                        class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item" title="Tendências"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
+                        class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item" title="Configurações"><span class="icon">⚙️</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-item" title="Sair"><span class="icon">🚪</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <span class="subtitle">Deep Dive</span>
+                    <h1>Frequência Cardíaca</h1>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="grid-column col-main">
+                    <section class="card overview-card"
+                        style="background: white; color: var(--text-primary); text-align: center;">
+                        <div class="card-header">
+                            <h2 style="color: var(--text-primary);">Pulso em Tempo Real</h2>
+                        </div>
+                        <div class="pulse-container">
+                            <div class="heart-icon" id="heart-pulse">💓</div>
+                            <div class="bpm-value" id="bpm-display">72</div>
+                            <div class="bpm-label">BPM</div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button class="btn-primary" id="track-btn" onclick="toggleTracking()">
+                                <span>▶️</span> Iniciar Medição
+                            </button>
+                        </div>
+                    </section>
+                </div>
+                <div class="grid-column col-side" style="grid-column: span 2;">
+                    <section class="card community-card">
+                        <div class="card-header">
+                            <h3>Anomalias Históricas</h3>
+                            <button class="btn-outline" style="font-size: 0.75rem; padding: 5px 12px;"
+                                onclick="alert('Relatório detalhado sendo gerado...')">Ver Histórico</button>
+                        </div>
+                        <div class="friends-list" id="anomaly-list">
+                            <p style="color: var(--text-secondary);">Nenhuma anomalia detectada nas últimas 24 horas.
+                            </p>
+                        </div>
+                    </section>
+
+                    <section class="card" style="margin-top: 25px;">
+                        <div class="card-header">
+                            <h3>Dica de Saúde</h3>
+                        </div>
+                        <p style="font-size: 0.9rem; border-left: 3px solid var(--pink); padding-left: 15px;">
+                            "Sua frequência cardíaca de repouso está 5 BPM abaixo da sua média mensal. Isso indica uma
+                            boa recuperação física."
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="help-tab">
+        <span class="help-icon">❓</span>
+        <span class="help-text">Ajuda</span>
+    </div>
+
+    <script>
+        let isTracking = false;
+        let trackInterval;
+
+        function toggleTracking() {
+            const btn = document.getElementById('track-btn');
+            const bpmDisplay = document.getElementById('bpm-display');
+            const heart = document.getElementById('heart-pulse');
+
+            if (!isTracking) {
+                isTracking = true;
+                btn.innerHTML = '<span>⏹️</span> Parar Medição';
+                btn.style.background = 'var(--red)';
+
+                trackInterval = setInterval(() => {
+                    const newBpm = 70 + Math.floor(Math.random() * 15);
+                    bpmDisplay.innerText = newBpm;
+                    const speed = (60 / newBpm).toFixed(2);
+                    heart.style.animationDuration = `${speed}s`;
+                }, 1000);
+
+                alert('📡 Conectando ao sensor... Medição iniciada.');
+            } else {
+                isTracking = false;
+                btn.innerHTML = '<span>▶️</span> Iniciar Medição';
+                btn.style.background = 'var(--sidebar-bg)';
+                clearInterval(trackInterval);
+                heart.style.animationDuration = '1s';
+                alert('💾 Medição finalizada e salva no histórico.');
+            }
+        }
+    </script>
+</body>
+
+</html>
