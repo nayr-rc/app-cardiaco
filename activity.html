@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CardioRisk AI - Activity</title>
+    <title>CardioRisk AI - Atividades</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,14 +19,17 @@
                 <div class="logo-icon">C</div>
             </div>
             <nav class="nav-menu">
-                <a href="index.html" class="nav-item"><span class="icon">🏠</span></a>
-                <a href="heart_rate.html" class="nav-item"><span class="icon">💓</span></a>
-                <a href="trends.html" class="nav-item"><span class="icon">📊</span></a>
-                <a href="activity.html" class="nav-item active"><span class="icon">🏃</span></a>
-                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+                <a href="index.html" class="nav-item" title="Home"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item" title="Frequência Cardíaca"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item" title="Tendências"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item active" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
+                        class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item" title="Configurações"><span class="icon">⚙️</span></a>
             </nav>
             <div class="sidebar-footer">
-                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+                <a href="login.html" class="nav-item" title="Sair"><span class="icon">🚪</span></a>
             </div>
         </aside>
 
@@ -36,7 +39,12 @@
             <header class="top-bar">
                 <div class="page-title">
                     <span class="subtitle">Deep Dive</span>
-                    <h1>Physical Activity</h1>
+                    <h1>Atividade Física</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-primary" onclick="alert('Funcionalidade de Registro Manual será aberta...')">
+                        <span>➕</span> Registrar Treino
+                    </button>
                 </div>
             </header>
 
@@ -44,21 +52,23 @@
                 <div class="grid-column col-main" style="grid-column: span 2;">
                     <section class="card overview-card" style="background: white; color: var(--text-primary);">
                         <div class="card-header">
-                            <h2 style="color: var(--text-primary);">Activity Breakdown</h2>
+                            <h2 style="color: var(--text-primary);">Análise de Atividades</h2>
+                            <button class="btn-outline" style="font-size: 0.8rem;"
+                                onclick="alert('Abrindo estatísticas detalhadas...')">Ver Estatísticas</button>
                         </div>
                         <div style="display: flex; gap: 40px; padding: 20px;">
-                            <div style="flex: 1;">
-                                <h3>Bicycle Drill</h3>
+                            <div style="flex: 1;" class="clickable-card" onclick="alert('Detalhamento de Ciclismo')">
+                                <h3>Treino de Bicicleta</h3>
                                 <p style="font-size: 2rem; font-weight: 700;">36 <span
-                                        style="font-size: 1rem; color: var(--text-secondary);">km / week</span></p>
+                                        style="font-size: 1rem; color: var(--text-secondary);">km / semana</span></p>
                                 <div class="progress-bar" style="height: 12px; margin-top: 10px;">
                                     <div class="progress" style="width: 45%;"></div>
                                 </div>
                             </div>
-                            <div style="flex: 1;">
-                                <h3>Jogging Hero</h3>
+                            <div style="flex: 1;" class="clickable-card" onclick="alert('Detalhamento de Corrida')">
+                                <h3>Herói da Corrida</h3>
                                 <p style="font-size: 2rem; font-weight: 700;">12 <span
-                                        style="font-size: 1rem; color: var(--text-secondary);">km / month</span></p>
+                                        style="font-size: 1rem; color: var(--text-secondary);">km / mês</span></p>
                                 <div class="progress-bar" style="height: 12px; margin-top: 10px;">
                                     <div class="progress" style="width: 13%;"></div>
                                 </div>

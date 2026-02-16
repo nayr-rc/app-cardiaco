@@ -19,14 +19,17 @@
                 <div class="logo-icon">C</div>
             </div>
             <nav class="nav-menu">
-                <a href="index.html" class="nav-item"><span class="icon">🏠</span></a>
-                <a href="heart_rate.html" class="nav-item"><span class="icon">💓</span></a>
-                <a href="trends.html" class="nav-item active"><span class="icon">📊</span></a>
-                <a href="activity.html" class="nav-item"><span class="icon">🏃</span></a>
-                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+                <a href="index.html" class="nav-item" title="Home"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item" title="Frequência Cardíaca"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item active" title="Tendências"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
+                        class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item" title="Configurações"><span class="icon">⚙️</span></a>
             </nav>
             <div class="sidebar-footer">
-                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+                <a href="login.html" class="nav-item" title="Sair"><span class="icon">🚪</span></a>
             </div>
         </aside>
 
@@ -38,7 +41,30 @@
                     <span class="subtitle">Deep Dive</span>
                     <h1>Risk Trends</h1>
                 </div>
+                <div class="top-bar-actions">
+                    <button class="btn-primary" onclick="syncInsights()">
+                        <span>🔄</span> Sincronizar Insights
+                    </button>
+                </div>
             </header>
+
+            <script>
+                function syncInsights() {
+                    const btn = event.currentTarget;
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<span>⏳</span> Processando...';
+                    btn.disabled = true;
+
+                    setTimeout(() => {
+                        btn.innerHTML = '<span>✅</span> Atualizado';
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                        }, 2000);
+                        alert('🔍 Nova análise concluída! Seus padrões de risco foram atualizados com base nos últimos 15 dias.');
+                    }, 1500);
+                }
+            </script>
 
             <div class="dashboard-grid" style="grid-template-columns: 1fr;">
                 <section class="card overview-card">

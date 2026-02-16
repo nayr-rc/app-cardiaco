@@ -613,8 +613,3 @@ body {
     justify-content: center;
     border-radius: 8px;
 }
-
-.alert-dismiss:hover {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.05);
-}

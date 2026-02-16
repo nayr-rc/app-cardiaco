@@ -19,16 +19,17 @@
                 <div class="logo-icon">C</div>
             </div>
             <nav class="nav-menu">
-                <a href="index.html" class="nav-item active"><span class="icon">🏠</span></a>
-                <a href="heart_rate.html" class="nav-item"><span class="icon">💓</span></a>
-                <a href="trends.html" class="nav-item"><span class="icon">📊</span></a>
-                <a href="activity.html" class="nav-item"><span class="icon">🏃</span></a>
-                <a href="medical_research.html" class="nav-item"><span class="icon">📚</span></a>
-                <a href="wearable_setup.html" class="nav-item"><span class="icon">⌚</span></a>
-                <a href="settings.html" class="nav-item"><span class="icon">⚙️</span></a>
+                <a href="index.html" class="nav-item active" title="Home"><span class="icon">🏠</span></a>
+                <a href="heart_rate.html" class="nav-item" title="Frequência Cardíaca"><span class="icon">💓</span></a>
+                <a href="trends.html" class="nav-item" title="Tendências"><span class="icon">📊</span></a>
+                <a href="activity.html" class="nav-item" title="Atividades"><span class="icon">🏃</span></a>
+                <a href="medical_research.html" class="nav-item" title="Pesquisa Médica"><span
+                        class="icon">📚</span></a>
+                <a href="wearable_setup.html" class="nav-item" title="Dispositivos"><span class="icon">⌚</span></a>
+                <a href="settings.html" class="nav-item" title="Configurações"><span class="icon">⚙️</span></a>
             </nav>
             <div class="sidebar-footer">
-                <a href="login.html" class="nav-item"><span class="icon">🚪</span></a>
+                <a href="login.html" class="nav-item" title="Sair"><span class="icon">🚪</span></a>
             </div>
         </aside>
 
@@ -43,9 +44,10 @@
                 <div class="top-bar-actions">
                     <div class="search-box">
                         <span class="search-icon">🔍</span>
-                        <input type="text" placeholder="Search">
+                        <input type="text" placeholder="Buscar no sistema..." id="global-search"
+                            onkeypress="if(event.key === 'Enter') alert('Buscando por: ' + this.value)">
                     </div>
-                    <div class="user-profile">
+                    <div class="user-profile" onclick="location.href='settings.html'" style="cursor: pointer;">
                         <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User"
                             class="avatar-img">
                     </div>
@@ -112,7 +114,7 @@
                         <h2 id="risk-status">Analyzing...</h2>
                     </section>
 
-                    <section class="card activity-card pink">
+                    <section class="card activity-card pink clickable-card" onclick="location.href='activity.html'">
                         <div class="icon-box"><span class="icon">🏃</span></div>
                         <div class="activity-info">
                             <h3>My Jogging</h3>
@@ -126,8 +128,14 @@
                     <section class="card community-card">
                         <div class="card-header">
                             <h3>Friends</h3>
-                            <a href="#" class="view-all">View All</a>
+                            <a href="javascript:void(0)" class="view-all" onclick="openFriendsList()">View All</a>
                         </div>
+
+                        <script>
+                            function openFriendsList() {
+                                alert('👥 Abrindo lista completa de amigos e conexões de saúde...');
+                            }
+                        </script>
                         <div class="friends-list">
                             <div class="friend-item">
                                 <img src="https://ui-avatars.com/api/?name=MS&background=0D8ABC&color=fff" alt="Friend"
