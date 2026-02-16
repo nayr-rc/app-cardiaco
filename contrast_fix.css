@@ -1,25 +1,63 @@
-/* FORCE BLACK TEXT EVERYWHERE FOR BETTER CONTRAST */
+/* ENHANCED CONTRAST FIX - Intelligent Contrast */
 
-/* Override all text colors to black */
-.research-header h2,
-.research-intro,
-.table-row,
-.info-box,
-.citations h4,
-.citations li,
-.sleep-metric p,
-.comorbidity-card li,
-.parameter-card .description,
-.bp-card p {
-    color: #000000 !important;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+/* Header text for dark backgrounds (like medical/wearable pages) */
+body[style*="background: #1a1d2e"] .top-bar .subtitle,
+body.dark-theme .top-bar .subtitle,
+.top-bar .subtitle {
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Card titles */
+body[style*="background: #1a1d2e"] .top-bar h1,
+body.dark-theme .top-bar h1,
+.top-bar h1 {
+    color: #ffffff !important;
+}
+
+/* Ensure text on light cards is always dark and legible */
+.research-card,
+.device-card,
+.parameter-card,
+.bp-card,
+.sleep-metric,
+.comorbidity-card {
+    color: #1a1a1a !important;
+}
+
+.research-card h2,
+.device-card h3,
 .parameter-card h3,
 .bp-card h3,
 .sleep-metric h3,
 .comorbidity-card h3 {
     color: #000000 !important;
-    text-shadow: none;
+    font-weight: 700 !important;
+}
+
+.research-intro,
+.device-card p,
+.instructions ol,
+.api-config-warning p {
+    color: #333333 !important;
+    line-height: 1.6 !important;
+}
+
+/* Specific fix for faded/apagado components */
+[style*="opacity: 0.6"],
+.faded {
+    opacity: 0.95 !important;
+    /* Force high opacity */
+    filter: saturate(1.1);
+    /* Enhance colors slightly */
+}
+
+/* Fix for API Warning box */
+.api-config-warning {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    border-width: 3px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.api-config-warning h3 {
+    color: #ea580c !important;
 }

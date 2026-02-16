@@ -19,23 +19,31 @@ async function initDashboard() {
         const riskStatus = document.getElementById('risk-status');
         const progressCircle = document.querySelector('.gauge-progress');
 
-        riskVal.innerText = `${data.latest_score}%`;
-        riskStatus.innerText = data.status;
+        if (riskVal) riskVal.innerText = `${data.latest_score}%`;
+        if (riskStatus) {
+            riskStatus.innerText = data.status;
+            let color = '#2ecc71';
+            if (data.latest_score > 60) color = '#e74c3c';
+            else if (data.latest_score > 40) color = '#e67e22';
+            else if (data.latest_score > 20) color = '#f1c40f';
+            riskStatus.style.color = color;
+        }
 
-        let color = '#2ecc71';
-        if (data.latest_score > 60) color = '#e74c3c';
-        else if (data.latest_score > 40) color = '#e67e22';
-        else if (data.latest_score > 20) color = '#f1c40f';
-
-        riskStatus.style.color = color;
-        progressCircle.style.stroke = color;
-
-        const offset = 283 - (data.latest_score / 100) * 283;
-        progressCircle.style.strokeDashoffset = offset;
+        if (progressCircle) {
+            let color = '#2ecc71';
+            if (data.latest_score > 60) color = '#e74c3c';
+            else if (data.latest_score > 40) color = '#e67e22';
+            else if (data.latest_score > 20) color = '#f1c40f';
+            progressCircle.style.stroke = color;
+            const offset = 283 - (data.latest_score / 100) * 283;
+            progressCircle.style.strokeDashoffset = offset;
+        }
 
         // 2. Update Metadata
-        document.getElementById('data-range').innerText = `${data.data_points_count} days`;
-        document.getElementById('last-update').innerText = data.last_updated;
+        const dataRange = document.getElementById('data-range');
+        const lastUpdate = document.getElementById('last-update');
+        if (dataRange) dataRange.innerText = `${data.data_points_count} days`;
+        if (lastUpdate) lastUpdate.innerText = data.last_updated;
 
         // 3. Render Trend Chart
         const chart = document.getElementById('trend-chart');
