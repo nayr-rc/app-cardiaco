@@ -1,9 +1,18 @@
 from db_manager import DBManager
 import sys
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 def test_connection():
-    mongo_uri = "mongodb+srv://narsie454_db_user:BH7BP1Wg9sDA5yAY@cardiorisk.zzksboj.mongodb.net/"
-    print(f"Testing connection to: {mongo_uri}")
+    mongo_uri = os.getenv("MONGODB_URI")
+    if not mongo_uri:
+        print("❌ Error: MONGODB_URI not found in environment variables.")
+        sys.exit(1)
+        
+    print(f"Testing connection to MongoDB...")
     
     try:
         db = DBManager(mongo_uri)

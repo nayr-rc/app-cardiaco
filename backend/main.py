@@ -7,6 +7,10 @@ from data_processor import HealthDataProcessor
 from models.anomaly_detector import CardiacAnomalyDetector
 from synthetic_generator import generate_synthetic_data
 from db_manager import DBManager
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def main():
     print("--- CardioRisk AI: Startup (Cloud-Sync Only) ---")
@@ -100,7 +104,11 @@ def main():
     # --- MONGODB INTEGRATION (ALPHA TEST) ---
     # NO LOCAL SAVING (dashboard_data.json and data.js removed from logic)
     try:
-        mongo_uri = "mongodb+srv://narsie454_db_user:BH7BP1Wg9sDA5yAY@cardiorisk.zzksboj.mongodb.net/"
+        mongo_uri = os.getenv("MONGODB_URI")
+        if not mongo_uri:
+            print("[ERROR] MONGODB_URI environment variable not set.")
+            return
+
         print("\n[DB] Synchronizing with MongoDB Alpha...")
         db = DBManager(mongo_uri)
         db.save_client_data(dashboard_data)

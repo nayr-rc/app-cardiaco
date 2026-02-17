@@ -2,6 +2,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from db_manager import DBManager
 import uvicorn
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = FastAPI(title="CardioRisk AI Cloud API")
 
@@ -14,7 +19,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MONGO_URI = "mongodb+srv://narsie454_db_user:BH7BP1Wg9sDA5yAY@cardiorisk.zzksboj.mongodb.net/"
+MONGO_URI = os.getenv("MONGODB_URI")
+if not MONGO_URI:
+    print("[CRITICAL] MONGODB_URI not set in environment!")
+    # In a real API, you might want to exit or handle this gracefully
+    
 db_manager = DBManager(MONGO_URI)
 
 @app.get("/")
